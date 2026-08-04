@@ -872,8 +872,9 @@ function renderMolGrid(filter){
       var joriyOy = m.bogozBosh ? hozirgiBogozOy(m.bogozBosh) : (m.bogoz||null);
       var kut = m.kutilgan || (m.bogozBosh ? addMonths(m.bogozBosh, 9) : null);
       if(joriyOy){
-        bogHtml = '<div class="mbog">🤰 Homiladorlik: <strong>'+joriyOy+'-oy</strong>';
-        if(kut) bogHtml += '<br>📅 Kutilgan tug\'ish: <strong>'+fd(kut)+'</strong>';
+        bogHtml = '<div class="mbog" style="display:flex;flex-direction:column;gap:4px;">'
+          + '<div>🤰 Homiladorlik: <strong>'+joriyOy+'-oy</strong></div>';
+        if(kut) bogHtml += '<div>📅 Kutilgan tug\'ish: <strong>'+fd(kut)+'</strong></div>';
         bogHtml += '</div>';
       }
     }
@@ -886,8 +887,10 @@ function renderMolGrid(filter){
       +(m.yosh?'<div class="mdet">Yoshi: <strong>'+esc(m.yosh)+'</strong></div>':'')
       +(m.vazn?'<div class="mdet">Og\'irligi: <strong>'+esc(m.vazn)+' kg</strong></div>':'')
       + bogHtml + milkBox(m)
-      +(CU.role==='admin'?'<button class="btn bo" style="width:100%;margin-top:8px;font-size:13px" data-sold-mol="'+m.id+'">💰 '+tx('sotildi_belgilash')+'</button>':'')
-      +(CU.role==='admin'?'<button class="bd" style="width:100%;margin-top:8px" data-del-mol="'+m.id+'">🗑 O\'chirish</button>':'');
+      + (CU.role==='admin' ? '<div style="display:flex; gap:8px; margin-top:12px;">'
+      + '<button class="btn bo" style="flex:1; font-size:12px; padding:8px 4px;" data-sold-mol="'+m.id+'">💰 '+tx('sotildi_belgilash')+'</button>'
+      + '<button class="bd" style="flex:1; font-size:12px; padding:8px 4px;" data-del-mol="'+m.id+'">🗑 O\'chirish</button>'
+      + '</div>' : '');
     grid.appendChild(c);
   });
 }
@@ -1297,9 +1300,11 @@ function addSog(){
     for(var ui=0;ui<molsU.length;ui++){ if(molsU[ui].raqam===mol||molsU[ui].raqam===mol.replace('#','')){ targetU=molsU[ui]; break; } }
     if(!targetU){ alert(tx('mol_topilmadi')); return; }
     if(targetU.tur!=='Sigir' && targetU.tur!=='Xonajin'){ alert(tx('faqat_sigir_bogoz')); return; }
+    if(targetU.holat==='Bogoz'){ alert("Bu mol allaqachon bo'g'oz (homilador)!"); return; }
     targetU.holat='Tekshiruv';
     targetU.urugSana=date;
     targetU.tekshirSana=addDays(date,45);
+    targetU.urugTimestamp=Date.now();
     sv('FM',molsU);
     extra.uSana=date;
   }
@@ -1884,8 +1889,8 @@ function showTmpAlert(pgId){
 }
 
 // ── BILDIRISHNOMALAR ──
-function nRead(){ return ldO('FNREAD'); }
-function nSaveRead(o){ sv('FNREAD', o); }
+function nRead(){ var key = CU && CU.email ? 'FNREAD_' + CU.email : 'FNREAD'; return ldO(key); }
+function nSaveRead(o){ var key = CU && CU.email ? 'FNREAD_' + CU.email : 'FNREAD'; sv(key, o); }
 function buildNotifs(){
   var today = new Date().toISOString().slice(0,10);
   function dd(a,b){ return Math.round((Date.parse(b)-Date.parse(a))/86400000); }
@@ -1913,6 +1918,7 @@ function buildNotifs(){
     else if(diff<=7) add('red','🐄',"Tug'ish juda yaqin",'№'+esc(m.raqam||'?')+' — atigi '+diff+' kun qoldi',id);
     else if(diff<=30) add('org','🐄',"Tug'ishga yaqin",'№'+esc(m.raqam||'?')+' — '+diff+' kun qoldi ('+fd(m.kutilgan)+')',id);
   });
+
   // Urug' qo'yilgandan 45 kun o'tgan — tekshiruv kerak
   ld('FM').forEach(function(m){
     if(m.holat!=='Tekshiruv' || !m.tekshirSana) return;
@@ -2136,3 +2142,6 @@ function csvFallback(csv){
 try{ var fl=localStorage.getItem('FL'); if(fl==='kir') setLang('kir'); }catch(e){}
 applyLang();
 boot();
+setInterval(function() {
+  if (typeof CU !== 'undefined' && CU) refreshNotifs();
+}, 60000);
