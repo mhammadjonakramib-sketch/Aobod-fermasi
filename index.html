@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https: wss:; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1a3a2a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="A.O.Obod">
+<title>A.O. Obod</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="lang-bar">
+  <span style="font-size:12px;opacity:.8">Til / Тил:</span>
+  <button class="lb on" id="btn-lat">Lotin</button>
+  <button class="lb" id="btn-kir">Кирилл</button>
+</div>
+
+<div class="cfgwrap" id="cfg" style="display:none">
+  <div class="cfgcard">
+    <h2>☁️ Ulanish sozlamasi</h2>
+    <p class="h">Ilovani o'z database'ingizga ulang. Bu ma'lumotni Supabase loyihangizdan bir marta kiritasiz (qo'llanmaga qarang).</p>
+    <div class="lerr2" id="cfg-err"></div>
+    <div class="fg"><label>Project URL</label><input type="text" id="cfg-url" placeholder="https://xxxx.supabase.co" autocapitalize="none" autocorrect="off"><div class="hint">Supabase → Settings → API → Project URL</div></div>
+    <div class="fg"><label>anon public key</label><input type="text" id="cfg-key" placeholder="eyJhbGci..." autocapitalize="none" autocorrect="off"><div class="hint">Supabase → Settings → API → anon public</div></div>
+    <button class="btn bp" id="cfg-save">💾 Saqlash va ulanish</button>
+  </div>
+</div>
+
+<div id="ls" style="display:none">
+  <div class="lcard">
+    <div class="logo"><span>🐄</span><h1>A.O. Obod</h1><p id="l-sub">Akramjon Olimjon Obod F/X</p></div>
+    <div class="lerr2" id="lerr"></div>
+    <div id="login-box">
+      <div class="fg"><label>Email</label><input type="email" id="lu" autocorrect="off" autocapitalize="none" autocomplete="username" placeholder="email@misol.uz"></div>
+      <div class="fg"><label data-l="parol_label">Parol</label><input type="password" id="lp" autocomplete="current-password"></div>
+      <button class="btn bp" id="login-btn">🔐 Kirish</button>
+      <div class="llink" id="to-signup">Yangi hisob ochish →</div>
+    </div>
+    <div id="signup-box" style="display:none">
+      <div class="fg"><label>Ism familiya</label><input type="text" id="su-n" placeholder="Ism"></div>
+      <div class="fg"><label>Email</label><input type="email" id="su-e" autocorrect="off" autocapitalize="none" placeholder="email@misol.uz"></div>
+      <div class="fg"><label>Parol (kamida 6 belgi)</label><input type="password" id="su-p"></div>
+      <button class="btn bp" id="signup-btn">✅ Ro'yxatdan o'tish</button>
+      <div class="llink" id="to-login">← Kirishga qaytish</div>
+    </div>
+    <div class="llink" id="to-cfg" style="margin-top:18px;color:var(--tm);font-weight:600">⚙️ Ulanish sozlamasini o'zgartirish</div>
+  </div>
+</div>
+
+<div class="busy" id="busy"><div class="spin"></div><div class="bt" id="busy-t">Yuklanmoqda...</div></div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="tbl">
+      <span style="font-size:22px">🐄</span>
+      <div>
+        <div class="tbt">A.O. Obod</div>
+        <div class="tsub" data-l="ferma_nomi">Akramjon Olimjon Obod F/X</div>
+      </div>
+    </div>
+    <div class="tbr">
+      <button class="nbell" id="nbell" title="Bildirishnomalar">🔔<span class="nbadge" id="nbadge">0</span></button>
+      <div class="ubadge"><span id="uname">—</span><span class="urole" id="urole">—</span></div>
+      <button class="blo" id="logout-btn" data-l="chiqish">Chiqish</button>
+    </div>
+  </div>
+
+  <div class="navt" id="navt">
+    <button class="nt on" data-pg="dash" data-l="nav_bosh">🏠 Bosh</button>
+    <button class="nt" id="nt-sut" data-pg="sut" data-l="nav_sut">🥛 Sut</button>
+    <button class="nt" id="nt-yem" data-pg="yem" data-l="nav_yem">🌾 Yem</button>
+    <button class="nt" id="nt-mol" data-pg="mol" data-l="nav_mol">🐮 Mollar</button>
+    <button class="nt" id="nt-sutolchov" data-pg="sutolchov">📋 <span data-l="sut_olchash">Sut o'lchash</span></button>
+    <button class="nt" id="nt-sog" data-pg="sog" data-l="nav_sog">💉 Sog'liq</button>
+    <button class="nt" data-pg="kel" data-l="nav_kel">📦 Yem kelish</button>
+    <button class="nt" data-pg="ombor" data-l="nav_ombor">🏪 Ombor</button>
+    <button class="nt admin-only" data-pg="dar" data-l="nav_dar">💰 Daromad</button>
+    <button class="nt admin-only" data-pg="his" data-l="nav_his">📊 Hisobot</button>
+    <button class="nt admin-only" data-pg="users">👥 Userlar</button>
+  </div>
+
+  <div class="main">
+
+    <!-- BOSH -->
+    <div class="pg on" id="pg-dash">
+      <div class="ph">
+        <div><div class="pt" data-l="nav_bosh">Bosh sahifa</div><div class="ps" id="today-d"></div></div>
+      </div>
+      <div id="dash-alerts"></div>
+      <div class="sg">
+        <div class="sc gn"><div class="si">🥛</div><div class="sv" id="s1">0L</div><div class="sl" data-l="bugungi_sut">Bugungi sut</div></div>
+        <div class="sc am"><div class="si">🌾</div><div class="sv" id="s3">0kg</div><div class="sl" data-l="bugungi_yem">Bugungi yem</div></div>
+        <div class="sc bl" id="sc-bu-sut"><div class="si">📅</div><div class="sv" id="s5">0L</div><div class="sl" data-l="bu_oygi_sut">Bu oygi sut</div></div>
+        <div class="sc tl" id="sc-bu-yem"><div class="si">🌾</div><div class="sv" id="s6">0kg</div><div class="sl" data-l="bu_oygi_yem">Bu oygi yem</div></div>
+        <div class="sc pu"><div class="si">📈</div><div class="sv" id="s7">0L</div><div class="sl" data-l="ortacha_bugun">O'rtacha 1 mol/kun</div></div>
+        <div class="sc so" id="sc-mol-oy"><div class="si">📊</div><div class="sv" id="s9">0L</div><div class="sl" data-l="ortacha_mol_oy">O'rtacha 1 mol/oy</div></div>
+        <div class="sc pu admin-only" id="sc-ort" style="display:none"><div class="si">📊</div><div class="sv" id="s8">0L</div><div class="sl" data-l="ortacha">O'rtacha sut/kun</div></div>
+      </div>
+      <div class="card" id="dash-perhead-card" style="display:none;margin-bottom:14px"><div class="ch"><div class="ct">🌾 Bugungi yem</div></div><div class="cb" id="dash-perhead"></div></div>
+      <div class="card" id="card-songgi-sut"><div class="ch"><div class="ct">🥛 <span data-l="songgi_sut">So'nggi sut</span></div></div><div class="cb" id="rsut"></div></div>
+    </div>
+
+    <!-- SUT -->
+    <div class="pg" id="pg-sut">
+      <div class="ph"><div><div class="pt">🥛 <span data-l="nav_sut">Sut hisobi</span></div></div></div>
+      <div id="sut-f1" class="card">
+        <div class="ch"><div class="ct">➕ <span id="sut-form-title" data-l="yangi_sut">Yangi sut yozuvi</span></div></div>
+        <div class="cb">
+          <div class="fgr">
+            <div class="fg"><label data-l="sana">Sana</label><input type="date" id="s1d"></div>
+            <div class="fg"><label data-l="mol_soni">Mol soni</label><input type="number" id="s1ms" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="buzoglarga">Buzog'larga (L)</label><input type="number" id="s1b" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="tashqariga">Tashqariga (L)</label><input type="number" id="s1t" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="kompaniyaga">Kompaniyaga (L)</label><input type="number" id="s1k" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="ishchilarga">Ishchilarga (L)</label><input type="number" id="s1i" placeholder="0" min="0" inputmode="numeric"></div>
+          </div>
+          <div class="fgap">
+            <button class="btn bs" id="add-sut1-btn" data-l="saqlash">💾 Saqlash</button>
+            <button class="btn bo" id="sut-cancel-btn" data-l="bekor" style="display:none">Bekor</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct">📋 <span data-l="sut_yozuvlari">Sut yozuvlari</span></div>
+          <input type="month" id="sut-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
+        </div>
+        <div class="tw"><table>
+          <thead><tr><th data-l="sana">Sana</th><th data-l="mol_soni">Mol</th><th>Litr</th><th data-l="bir_bosh">1 bosh</th><th data-l="kompaniyaga">Komp.</th><th data-l="tashqariga">Tash.</th><th data-l="buzoglarga">Buzog'</th><th data-l="ishchi_q">Ishchi</th><th>Kim</th><th></th></tr></thead>
+          <tbody id="sut-tb"></tbody>
+        </table>
+        <div id="sut-empty" class="empty" style="display:none"><div class="ei">🥛</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- YEM -->
+    <div class="pg" id="pg-yem">
+      <div class="ph">
+        <div><div class="pt">🌾 <span data-l="nav_yem">Yem-xashak</span></div></div>
+        <div class="fgap">
+          <input type="date" id="yd" style="padding:9px 12px;border:1.5px solid var(--br);border-radius:9px;font-size:14px;background:var(--cr)">
+          <button class="btn bo" id="copy-yem-btn" data-l="kechagidek">📋 Kechagidek</button>
+          <button class="btn ba" id="save-yem-btn" data-l="saqlash">💾 Saqlash</button>
+        </div>
+      </div>
+      <div class="msbar">
+        <label data-l="sigirlar">Sigirlar</label>
+        <input type="number" id="ms-sig" placeholder="0" min="0" inputmode="numeric">
+        <span data-l="xonajinlar">Xonajinlar</span>
+        <input type="number" id="ms-xon" placeholder="0" min="0" inputmode="numeric">
+      </div>
+      <div class="ftabs" id="yem-tabs">
+        <button class="tab on" data-yg="sigir" data-l="sigirlar">🐄 Sigirlar</button>
+        <button class="tab" data-yg="xonajin" data-l="xonajinlar">🐮 Xonajinlar</button>
+        <button class="tab" data-yg="buzoq" data-l="buzoqlar">🐣 Buzoqlar</button>
+      </div>
+      <div id="yg-sigir" class="yg"></div>
+      <div id="yg-xonajin" class="yg" style="display:none"></div>
+      <div id="yg-buzoq" class="yg" style="display:none"></div>
+      <div class="card" style="margin-top:14px">
+        <div class="ch">
+          <div class="ct">📅 <span data-l="yem_tarixi">Yem tarixi</span> <span style="font-size:11px;color:var(--tm);font-weight:500">(kunni bosing)</span></div>
+          <input type="month" id="yem-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
+        </div>
+        <div id="yem-days" style="display:flex;flex-direction:column;gap:10px"></div>
+        <div id="yem-empty" class="empty" style="display:none"><div class="ei">🌾</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div>
+      </div>
+    </div>
+
+    <!-- MOL -->
+    <div class="pg" id="pg-mol">
+      <div class="ph">
+        <div><div class="pt">🐮 <span data-l="nav_mol">Mollar</span></div></div>
+        <button class="btn bs" id="mol-form-btn" data-l="mol_qosh">➕ Mol qo'shish</button>
+      </div>
+      <div class="card" id="mol-form" style="display:none">
+        <div class="ch"><div class="ct" data-l="yangi_mol">➕ Yangi mol</div></div>
+        <div class="cb">
+          <div class="fgr">
+            <div class="fg"><label data-l="mol_raqami">Mol raqami</label><input type="text" id="mr" placeholder="#001"></div>
+            <div class="fg"><label data-l="mol_turi">Turi</label>
+              <select id="mt">
+                <option value="Novvos" data-l="opt_novvos">🐂 Novvos</option>
+                <option value="Sigir" data-l="opt_sigir">🐄 Sigir</option>
+                <option value="Bezov" data-l="opt_bezov">🐃 Bezov</option>
+                <option value="Xonajin" data-l="opt_xonajin">🐮 Xonajin</option>
+              </select>
+            </div>
+            <div class="fg" id="yosh-row"><label data-l="yoshi">Yoshi</label><input type="text" id="my" data-ph="ph_yosh" placeholder="3 yil"></div>
+            <div class="fg" id="tugilgan-row" style="display:none"><label data-l="tugilgan_sana">Tug'ilgan sana</label><input type="date" id="m-tug"></div>
+            <div class="fg"><label data-l="ona_raqami">Onasining raqami (ID)</label><input type="text" id="m-ona" placeholder="#001"></div>
+            <div class="fg"><label data-l="holati">Holati</label>
+              <select id="mh">
+                <option value="Soglom" data-l="soglom">✅ Sog'lom</option>
+                <option value="Bogoz" data-l="bogoz">🤰 Bo'g'oz</option>
+                <option value="Kasal" data-l="kasal">⚠️ Kasal</option>
+                <option value="Davolashda" data-l="davolashda">💊 Davolashda</option>
+              </select>
+            </div>
+            <div class="fg" id="bogoz-oyi-row" style="display:none"><label data-l="bogozlik_oyi">Bo'g'ozlik oyi</label><input type="number" id="mbo" placeholder="1-9" min="1" max="9" inputmode="numeric"></div>
+            <div class="fg" id="bezov-jins-row" style="display:none"><label data-l="bezov_jinsi">Bezov jinsi</label>
+              <select id="bezov-jins">
+                <option value="Novvos" data-l="opt_novvos_e">🐂 Novvos (erkak)</option>
+                <option value="Xonajin" data-l="opt_xonajin_u">🐮 Xonajin (urg'ochi)</option>
+              </select>
+            </div>
+          </div>
+          <div class="fgap">
+            <button class="btn bs" id="add-mol-btn" data-l="saqlash">💾 Saqlash</button>
+            <button class="btn bo" id="mol-cancel-btn" data-l="bekor">Bekor</button>
+          </div>
+        </div>
+      </div>
+      <div class="ftabs" id="mol-tabs">
+        <button class="tab on" data-mf="all" data-l="hammasi">Hammasi</button>
+        <button class="tab" data-mf="Novvos" data-l="opt_novvos">🐂 Novvos</button>
+        <button class="tab" data-mf="Sigir" data-l="opt_sigir">🐄 Sigir</button>
+        <button class="tab" data-mf="Bezov" data-l="opt_bezov">🐃 Bezov</button>
+        <button class="tab" data-mf="Xonajin" data-l="opt_xonajin">🐮 Xonajin</button>
+        <button class="tab" data-mf="Bogoz" data-l="bogoz">🤰 Bo'g'oz</button>
+        <button class="tab" data-mf="Kasal" data-l="kasal">⚠️ Kasal</button>
+        <button class="tab" data-mf="Davolashda" data-l="davolashda">💊 Davolashda</button>
+        <button class="tab" data-mf="sold" data-l="sotilgan">💰 Sotilgan</button>
+      </div>
+      <input type="search" id="mol-search" placeholder="🔍 Raqam bo'yicha qidirish..." style="width:100%;padding:11px 14px;border:1.5px solid var(--br);border-radius:10px;font-size:15px;box-sizing:border-box;margin-bottom:12px;background:var(--cr)">
+      <div class="sg" id="mol-sg"></div>
+      <div id="mol-bezbd"></div>
+      <div id="mol-grid" class="mg"></div>
+      <div id="mol-empty" class="empty" style="display:none"><div class="ei">🐮</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div>
+    </div>
+
+    <div class="smask" id="mdet-mask" style="display:none"></div>
+    <div class="smodal" id="mdet-modal" style="display:none;max-width:420px;max-height:82vh;overflow-y:auto">
+      <div id="mdet-body"></div>
+      <div id="mdet-editform" style="display:none">
+        <div class="divr"></div>
+        <div class="fg"><label data-l="mol_raqami">Mol raqami</label><input type="text" id="med-raqam"></div>
+        <div class="fg"><label data-l="onasi">Onasi</label><input type="text" id="med-ona"></div>
+        <div class="fg" id="med-yosh-fg"><label data-l="yoshi">Yoshi</label><input type="text" id="med-yosh"></div>
+        <div class="fg" id="med-tug-fg" style="display:none"><label data-l="tugilgan_sana">Tug'ilgan sana</label><input type="date" id="med-tug"></div>
+        <div class="fg"><label data-l="ogirligi">Og'irligi (kg)</label><input type="text" id="med-vazn" inputmode="numeric"></div>
+        <div class="fgap" style="margin-top:14px">
+          <button class="btn bs" id="mdet-save" data-l="saqlash">💾 Saqlash</button>
+          <button class="btn bo" id="mdet-cancel" data-l="bekor">Bekor</button>
+        </div>
+      </div>
+      <button class="btn bo" id="mdet-edit" style="width:100%;margin-top:14px" data-l="tahrirlash">✏️ Tahrirlash</button>
+      <button class="btn bo" id="mdet-close" style="width:100%;margin-top:8px" data-l="yopish">Yopish</button>
+    </div>
+
+    <div class="smask" id="sell-mask" style="display:none"></div>
+    <div class="smodal" id="sell-modal" style="display:none">
+      <div class="smt" data-l="molni_sotish">💰 Molni sotish</div>
+      <div class="sms" id="sell-molinfo"></div>
+      <label data-l="sotilgan_sana">Sotilgan sana</label>
+      <input type="date" id="sell-date">
+      <label data-l="sotish_tavsif">Tavsif (kimga, narx, sabab)</label>
+      <textarea id="sell-desc" rows="3" placeholder="..."></textarea>
+      <div class="fgap" style="margin-top:14px">
+        <button class="btn bs" id="sell-save" data-l="sotildi_tugma">💰 Sotildi</button>
+        <button class="btn bo" id="sell-cancel" data-l="bekor">Bekor</button>
+      </div>
+    </div>
+
+    <div class="pg" id="pg-sutolchov">
+      <div class="ph">
+        <div><div class="pt">🥛 <span data-l="sut_olchash">Sut o'lchash</span></div></div>
+      </div>
+      <div class="card">
+        <div class="cb">
+          <div class="fg"><label data-l="olchov_sana">O'lchov sanasi</label><input type="date" id="so-date"></div>
+          <div class="fg"><label data-l="sigirni_tanlang">Sigirni tanlang</label><select id="so-cow"><option value="">—</option></select></div>
+        </div>
+      </div>
+      <div id="so-input" style="display:none">
+        <div class="socard">
+          <div class="sohead" id="so-cowhead"></div>
+          <div id="so-kolostrum" style="display:none;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700;padding:8px 11px;border-radius:8px;margin-bottom:10px"></div>
+          <div class="sorow">
+            <div class="sofield"><label>🌅 <span data-l="ertalab">Ertalab</span></label><input type="number" inputmode="decimal" step="0.1" min="0" id="so-ert"></div>
+            <div class="sofield"><label>☀️ <span data-l="obed">Obed</span></label><input type="number" inputmode="decimal" step="0.1" min="0" id="so-obed"></div>
+            <div class="sofield"><label>🌙 <span data-l="kechqurun">Kechqurun</span></label><input type="number" inputmode="decimal" step="0.1" min="0" id="so-kech"></div>
+          </div>
+          <div class="sototal"><span data-l="jami">Jami</span>: <strong id="so-tot">0</strong> L</div>
+        </div>
+        <button class="btn bs" id="so-save" style="width:100%;margin-top:12px">💾 <span data-l="saqlash">Saqlash</span></button>
+      </div>
+      <div id="so-empty" class="empty" style="display:none"><div class="ei">🐄</div><div class="et" data-l="so_empty">Sigir yo'q. Avval Mollar bo'limiga qo'shing.</div></div>
+      <div id="so-done" class="empty" style="display:none"><div class="ei">✅</div><div class="et" data-l="so_done">Bu sanada barcha sigirlar o'lchandi</div></div>
+    </div>
+
+    <!-- SOG'LIQ -->
+    <div class="pg" id="pg-sog">
+      <div class="ph"><div><div class="pt">💉 <span data-l="nav_sog">Mol sog'ligi</span></div></div></div>
+      <div class="card">
+        <div class="ch"><div class="ct" data-l="yangi_yozuv">➕ Yangi yozuv</div></div>
+        <div class="cb">
+          <div class="fgr">
+            <div class="fg"><label data-l="sana">Sana</label><input type="date" id="sgd"></div>
+            <div class="fg"><label data-l="voqea">Voqea</label>
+              <select id="sgt">
+                <option value="Emlash" data-l="opt_emlash">💉 Emlash</option>
+                <option value="Davolash" data-l="opt_davolash">💊 Davolash</option>
+                <option value="Tugish" data-l="opt_tugish">🐣 Tug'ish</option>
+                <option value="Urugqoyish" data-l="opt_urugqoyish">💉 Urug' qo'yish</option>
+                <option value="Bogozlik" data-l="opt_bogozlik">🤰 Bo'g'ozlik</option>
+                <option value="VetKorik" data-l="opt_vetkorik">🩺 Vet. ko'rigi</option>
+                <option value="Boshqa" data-l="opt_boshqa">📋 Boshqa</option>
+              </select>
+            </div>
+            <div class="fg" id="molraqam-fg"><label data-l="mol_raqami">Mol raqami</label><input type="text" id="sgm" placeholder="#001"></div>
+            <div class="fg" id="dori-fg"><label data-l="dori_v">Dori / Vaksina</label><input type="text" id="sgdr"></div>
+          </div>
+          <div id="emlash-guruh" style="display:none">
+            <div class="divr"></div>
+            <div style="font-size:13px;font-weight:700;color:var(--gm);margin-bottom:10px">💉 <span data-l="emlash_guruh_h">Kimlarga emlanadi?</span></div>
+            <div class="fgr" style="flex-wrap:wrap;gap:8px">
+              <button type="button" class="chip on" data-eg="all" data-l="eg_hammasi">🐄 Hammasi</button>
+              <button type="button" class="chip" data-eg="Sigir" data-l="eg_sigirlar">🐄 Sigirlar</button>
+              <button type="button" class="chip" data-eg="Novvos" data-l="eg_novvoslar">🐂 Novvoslar</button>
+              <button type="button" class="chip" data-eg="Bezov" data-l="eg_bezovlar">🐃 Bezovlar</button>
+              <button type="button" class="chip" data-eg="Xonajin" data-l="eg_xonajinlar">🐮 Xonajinlar</button>
+              <button type="button" class="chip" data-eg="Bogoz" data-l="eg_bogozlar">🤰 Bo'g'ozlar</button>
+            </div>
+            <div id="emlash-soni" style="font-size:12px;color:var(--tm);margin-top:8px"></div>
+          </div>
+          <div id="tug-f" style="display:none">
+            <div class="divr"></div>
+            <div style="font-size:13px;font-weight:700;color:var(--gm);margin-bottom:10px">🐣 <span data-l="tug_info">Tug'ish ma'lumotlari</span></div>
+            <div class="fgr">
+              <div class="fg"><label data-l="tug_jinsi">Jinsi (1-bola)</label>
+                <select id="sgtt">
+                  <option value="Novvos" data-l="opt_novvos_e">🐂 Novvos (erkak)</option>
+                  <option value="Xonajin" data-l="opt_xonajin_u">🐮 Xonajin (urg'ochi)</option>
+                </select>
+              </div>
+              <div class="fg"><label data-l="tug_soni">Soni</label>
+                <select id="sgts" onchange="var w=document.getElementById('sgtt2-wrap');if(w)w.style.display=(this.value==='2')?'':'none'">
+                  <option value="1" data-l="opt_1ta">1 ta</option>
+                  <option value="2" data-l="opt_2ta">2 ta (egizak)</option>
+                </select>
+              </div>
+              <div class="fg" id="sgtt2-wrap" style="display:none"><label data-l="tug_jinsi2">Jinsi (2-bola)</label>
+                <select id="sgtt2">
+                  <option value="Novvos" data-l="opt_novvos_e">🐂 Novvos (erkak)</option>
+                  <option value="Xonajin" data-l="opt_xonajin_u">🐮 Xonajin (urg'ochi)</option>
+                </select>
+              </div>
+              <div class="fg"><label data-l="tug_vazni">Vazni (kg)</label><input type="number" id="sgtv" placeholder="35" inputmode="numeric"></div>
+              <div class="fg"><label data-l="tug_raqami">Yangi raqami</label><input type="text" id="sgtr" placeholder="#150"></div>
+            </div>
+          </div>
+          <div id="urug-f" style="display:none">
+            <div class="divr"></div>
+            <div style="font-size:13px;font-weight:700;color:var(--gm);margin-bottom:10px">💉 <span data-l="urug_info">Urug' qo'yish ma'lumotlari</span></div>
+            <div style="font-size:11px;color:var(--tm);margin-top:-4px;margin-bottom:8px" data-l="urug_hint">💡 45 kundan keyin "tekshirilsinmi" bildirishnomasi keladi. Doktor tasdiqlasa, bo'g'ozlik hisobi shu sanadan boshlanadi.</div>
+          </div>
+          <div id="bog-f" style="display:none">
+            <div class="divr"></div>
+            <div style="font-size:13px;font-weight:700;color:var(--gm);margin-bottom:10px">🤰 <span data-l="bog_info">Bo'g'ozlik ma'lumotlari</span></div>
+            <div class="fgr">
+              <div class="fg"><label data-l="bogozlik_oyi">Homila necha oylik? (vet aytadi)</label><input type="number" id="sgbo" placeholder="1-9" min="1" max="9" inputmode="numeric"></div>
+              <div class="fg"><label data-l="kutilgan">Kutilgan tug'ish (avtomatik)</label><input type="date" id="sgku" readonly style="background:#f0fdf4;font-weight:700;color:var(--gm)"></div>
+            </div>
+            <div style="font-size:11px;color:var(--tm);margin-top:-4px" data-l="bog_hint">💡 Sigir 9 oyda tug'adi. Oyni kiritsangiz, kutilgan tug'ish sanasi avtomatik hisoblanadi.</div>
+          </div>
+          <div id="doza-row" class="fgr">
+            <div class="fg"><label data-l="doza">Doza</label><input type="text" id="sgdz" placeholder="5 ml"></div>
+            <div class="fg"><label data-l="keyingi">Keyingi ko'rik</label><input type="date" id="sgky"></div>
+          </div>
+          <div class="fg"><label data-l="tavsif">Tavsif</label><input type="text" id="sgtav"></div>
+          <button class="btn bs" id="add-sog-btn" data-l="saqlash">💾 Saqlash</button>
+        </div>
+      </div>
+      <div class="ftabs" id="sog-tabs">
+        <button class="tab on" data-sf="all" data-l="hammasi">Hammasi</button>
+        <button class="tab" data-sf="Emlash">💉 Emlash</button>
+        <button class="tab" data-sf="Davolash">💊 Davolash</button>
+        <button class="tab" data-sf="Tugish">🐣 Tug'ish</button>
+        <button class="tab" data-sf="Bogozlik" data-l="bogoz">🤰 Bo'g'oz</button>
+      </div>
+      <div id="sog-list"></div>
+    </div>
+
+    <!-- YEM KELISH -->
+    <div class="pg" id="pg-kel">
+      <div class="ph"><div><div class="pt">📦 <span data-l="nav_kel">Yem kelish</span></div><div class="ps" data-l="kel_sub">Fermaga kelgan yemlarni yozish</div></div></div>
+      <div class="card">
+        <div class="ch"><div class="ct" data-l="yangi_kel">➕ Yangi yem keldi</div></div>
+        <div class="cb">
+          <div class="fgr">
+            <div class="fg"><label data-l="sana">Sana</label><input type="date" id="kd"></div>
+            <div class="fg"><label data-l="yem_turi">Yem turi</label>
+              <select id="ktur">
+                <option>Silos Makka</option><option>Beda</option><option>Somon</option>
+                <option>Soya Shrot</option><option>Raps Shrot</option><option>Semichka Shrot</option>
+                <option>Arpa Yarma</option><option>Makka Yarma</option><option>Profat</option>
+                <option>Premiks</option><option>Soda</option><option>Mel</option>
+                <option>Tuz</option><option>Suv</option><option>Boshqa</option>
+              </select>
+            </div>
+            <div class="fg"><label data-l="miqdori">Miqdori</label><input type="number" id="kmiq" placeholder="10" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="olchov">O'lchov</label>
+              <select id="kbr">
+                <option>tonna</option><option>kg</option><option>dona</option><option>litr</option><option>qop</option>
+              </select>
+            </div>
+            <div class="fg"><label data-l="narxi_birlik">1 birlik narxi (so'm)</label><input type="number" id="knarx" placeholder="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="kim_keltirdi">Kim keltirdi</label><input type="text" id="kkim"></div>
+          </div>
+          <div id="kel-summa" style="background:var(--gp);border:1.5px solid #b7e4c7;border-radius:10px;padding:13px 16px;margin-bottom:12px;display:none">
+            <div style="font-size:12px;color:var(--tm);margin-bottom:3px" data-l="umumiy_summa">Umumiy summa</div>
+            <div style="font-size:22px;font-weight:800;color:var(--gm)" id="kel-summa-val">0 so'm</div>
+            <div style="font-size:11px;color:var(--tm);margin-top:3px" id="kel-summa-hesob"></div>
+          </div>
+          <button class="btn bs" id="add-kel-btn" data-l="saqlash">💾 Saqlash</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct">📋 <span data-l="kel_tarixi">Kelgan yemlar</span></div>
+          <input type="month" id="kel-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
+        </div>
+        <div class="cb" id="kel-list" style="padding:12px"><div class="empty"><div class="ei">📦</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div></div>
+      </div>
+    </div>
+
+    <!-- OMBOR -->
+    <div class="pg" id="pg-ombor">
+      <div class="ph"><div><div class="pt">🏪 <span data-l="nav_ombor">Ombor</span></div><div class="ps" data-l="ombor_sub">Keldi - Sarflandi = Qoldi</div></div></div>
+      <div class="sg" id="ombor-sg"></div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct">📋 <span data-l="ombor_holat">Ombor holati</span></div>
+          <input type="month" id="ombor-m" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
+        </div>
+        <div class="tw"><table>
+          <thead><tr><th>Yem turi</th><th data-l="keldi">Keldi</th><th data-l="sarflandi">Sarflandi</th><th data-l="qoldi">Qoldi</th><th>Holat</th></tr></thead>
+          <tbody id="ombor-tb"></tbody>
+        </table>
+        <div id="ombor-empty" class="empty" style="display:none"><div class="ei">🏪</div><div class="et" data-l="yoq">Ma'lumot yo'q</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAROMAD -->
+    <div class="pg" id="pg-dar">
+      <div class="ph"><div><div class="pt">💰 <span data-l="nav_dar">Daromad</span></div></div></div>
+      <div class="card"><div class="ch"><div class="ct">💵 <span data-l="sut_narxi">Sut narxi</span></div></div>
+        <div class="cb"><div class="fg" style="max-width:280px">
+          <label data-l="litr_narxi">1 litr sut narxi (so'm)</label>
+          <input type="number" id="narx" placeholder="4500" inputmode="numeric">
+        </div></div>
+      </div>
+      <div class="fg" style="max-width:240px;margin-bottom:14px">
+        <label data-l="oy_tanla">Oy tanlang</label>
+        <input type="month" id="dar-m" style="padding:10px 12px;border:1.5px solid var(--br);border-radius:9px;font-size:14px;background:var(--cr);width:100%">
+      </div>
+      <div class="sg" id="dar-sg"></div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><div class="ct">🧮 <span data-l="roi_title">Sut tannarxi va foyda kalkulyatori</span></div></div>
+        <div class="cb">
+          <div style="font-size:12px;color:var(--tm);margin-bottom:12px" data-l="roi_hint">💡 Yuqoridagi "1 litr sut narxi" va tanlangan oy asosida hisoblanadi. Yem xarajati "Yem kelish"dagi narxlardan olinadi (tonna avtomatik kg ga aylantiriladi).</div>
+          <div id="roi-result"></div>
+        </div>
+      </div>
+
+      <div class="card"><div class="ch"><div class="ct">📋 <span data-l="kunlik_dar">Kunlik daromad</span></div></div>
+        <div class="cb" id="dar-det"></div></div>
+    </div>
+
+    <!-- HISOBOT -->
+    <div class="pg" id="pg-his">
+      <div class="ph"><div><div class="pt">📊 <span data-l="nav_his">Hisobot</span></div></div></div>
+      <div class="fg" style="max-width:240px;margin-bottom:14px">
+        <label data-l="oy_tanla">Oy tanlang</label>
+        <input type="month" id="his-m" style="padding:10px 12px;border:1.5px solid var(--br);border-radius:9px;font-size:14px;background:var(--cr);width:100%">
+      </div>
+      <div class="expbar">
+        <button class="expbtn pdf" id="exp-pdf">📄 <span data-l="pdf_hisobot">PDF hisobot</span></button>
+        <button class="expbtn xls" id="exp-xls">📊 <span data-l="excel_jadval">Excel (CSV)</span></button>
+      </div>
+      <div class="sg" id="his-sg"></div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><div class="ct">📈 <span data-l="grafik_sut">Sut grafigi</span></div></div>
+        <div class="cb" style="padding:12px">
+          <canvas id="sut-chart" height="200" style="width:100%"></canvas>
+          <div id="sut-chart-empty" class="empty" style="display:none;padding:20px"><div class="ei">📈</div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><div class="ct">📈 <span data-l="grafik_ortacha">O'rtacha sut (mol boshiga)</span></div></div>
+        <div class="cb" style="padding:12px">
+          <canvas id="ort-chart" height="180" style="width:100%"></canvas>
+          <div id="ort-chart-empty" class="empty" style="display:none;padding:20px"><div class="ei">📈</div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><div class="ct">🌾 <span data-l="grafik_yem">Yem grafigi</span></div></div>
+        <div class="cb" style="padding:12px">
+          <canvas id="yem-chart" height="180" style="width:100%"></canvas>
+          <div id="yem-chart-empty" class="empty" style="display:none;padding:20px"><div class="ei">📊</div></div>
+        </div>
+      </div>
+      <div class="twoc">
+        <div class="card"><div class="ch"><div class="ct">🥛 <span data-l="kunlik_sut">Kunlik sut</span></div></div><div class="cb" id="his-sut"></div></div>
+        <div class="card"><div class="ch"><div class="ct">🌾 <span data-l="yem_turlari">Yem turlari</span></div></div><div class="cb" id="his-yem"></div></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="ch"><div class="ct">🏆 <span data-l="sigir_reyting">Sigirlar reytingi</span></div></div>
+        <div class="cb">
+          <div class="fg"><label data-l="sana_tanla">Sana tanlang</label><input type="date" id="rk-date"></div>
+          <div class="sg" id="rk-sg" style="margin-top:6px"></div>
+          <div id="rk-list" style="margin-top:10px"></div>
+          <div id="rk-empty" class="empty" style="display:none"><div class="ei">🥛</div><div class="et" data-l="rk_empty">Bu sanada sut o'lchovi yo'q</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERLAR -->
+    <div class="pg" id="pg-users">
+      <div class="ph"><div><div class="pt">👥 Foydalanuvchilar</div></div></div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><div class="ct">🔑 Mening parolim</div></div>
+        <div class="cb">
+          <div class="fg"><label>Yangi parol (kamida 6 belgi)</label><input type="password" id="np-pass"></div>
+          <button class="btn bp" id="np-save">Parolni yangilash</button>
+          <div class="umsg" id="np-msg"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">👥 Foydalanuvchilar va rollar</div></div>
+        <div class="cb">
+          <div id="users-list"></div>
+          <div class="umsg" id="users-msg"></div>
+          <p style="font-size:12.5px;color:var(--tm);margin-top:12px;line-height:1.5">➕ Yangi xodim qo'shish: u ilovani ochib <b>"Yangi hisob ochish"</b> orqali ro'yxatdan o'tsin, keyin shu yerdan unga rol bering.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="nmask" id="nmask"></div>
+<div class="npanel" id="npanel">
+  <div class="nph"><div class="t">🔔 <span data-l="bildirishnomalar">Bildirishnomalar</span></div><button class="nclr" id="nclr" data-l="hammasi_oqildi">Hammasini o'qildi</button></div>
+  <div class="nlist" id="nlist"></div>
+</div>
+<div class="ntoasts" id="ntoasts"></div>
+<div id="printArea"></div>
+
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+</body>
+</html>
