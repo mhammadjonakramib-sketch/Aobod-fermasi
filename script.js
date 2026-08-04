@@ -822,7 +822,14 @@ function renderMolGrid(filter){
   else if(curMolFilter==='Bogoz') fl=active.filter(function(m){ return m.holat==='Bogoz'; });
   else if(curMolFilter==='Kasal') fl=active.filter(function(m){ return m.holat==='Kasal'; });
   else if(curMolFilter==='Davolashda') fl=active.filter(function(m){ return m.holat==='Davolashda'; });
-  else if(curMolFilter!=='all') fl=active.filter(function(m){ return m.tur===curMolFilter; });
+  else if(curMolFilter!=='all') fl=active.filter(function(m){ 
+    if(m.tur!==curMolFilter) return false;
+    if(curMolFilter==='Sigir' && m.holat==='Bogoz'){
+      var oy = m.bogozBosh ? hozirgiBogozOy(m.bogozBosh) : (parseInt(m.bogoz)||0);
+      if(oy >= 7) return false;
+    }
+    return true;
+  });
   var _q=(molSearch||'').trim().toLowerCase();
   if(_q) fl=fl.filter(function(m){ return String(m.raqam||'').toLowerCase().indexOf(_q)>=0; });
   var tot=active.length,nov=0,sig=0,bez=0,xon=0,bog=0,kas=0,bezN=0,bezX=0;
@@ -1175,16 +1182,14 @@ function saveSutOlchov(){
 document.getElementById('sgt').addEventListener('change', function(){
   var v=this.value;
   var isTug = v==='Tugish';
-  var isBog = v==='Bogozlik';
   var isUrug = v==='Urugqoyish';
   var isEml = v==='Emlash';
   document.getElementById('tug-f').style.display = isTug?'block':'none';
   var sgw2=document.getElementById('sgtt2-wrap'); if(sgw2) sgw2.style.display=(isTug && document.getElementById('sgts').value==='2')?'':'none';
-  document.getElementById('bog-f').style.display = isBog?'block':'none';
   document.getElementById('urug-f').style.display = isUrug?'block':'none';
-  // Dori/vaksina va doza — tug'ish, bo'g'ozlik va urug' qo'yishda kerak emas
-  document.getElementById('doza-row').style.display = (isTug||isBog||isUrug)?'none':'';
-  document.getElementById('dori-fg').style.display = (isTug||isBog||isUrug)?'none':'';
+  // Dori/vaksina va doza — tug'ish, va urug' qo'yishda kerak emas
+  document.getElementById('doza-row').style.display = (isTug||isUrug)?'none':'';
+  document.getElementById('dori-fg').style.display = (isTug||isUrug)?'none':'';
   // Emlash: guruh-rejim (mol raqami o'rniga guruh tanlash)
   document.getElementById('molraqam-fg').style.display = isEml?'none':'';
   document.getElementById('emlash-guruh').style.display = isEml?'block':'none';
@@ -1210,24 +1215,6 @@ document.getElementById('emlash-guruh').addEventListener('click', function(e){
   updateEmlashSoni();
 });
 
-// Bo'g'ozlik oyini kiritganda — kutilgan tug'ish avtomatik (9 oy - homila oyi)
-document.getElementById('sgbo').addEventListener('input', function(){
-  var oy = parseInt(this.value)||0;
-  if(oy>=1 && oy<=9){
-    var qolganOy = 9 - oy;
-    var tanlangan = document.getElementById('sgd').value || new Date().toISOString().slice(0,10);
-    document.getElementById('sgku').value = addMonths(tanlangan, qolganOy);
-  } else {
-    document.getElementById('sgku').value = '';
-  }
-});
-document.getElementById('sgd').addEventListener('change', function(){
-  var boEl=document.getElementById('sgbo');
-  if(boEl && boEl.value){ try{ boEl.dispatchEvent(new Event('input')); }catch(e){
-    var oy=parseInt(boEl.value)||0;
-    if(oy>=1 && oy<=9){ document.getElementById('sgku').value = addMonths(this.value, 9-oy); }
-  } }
-});
 
 document.getElementById('add-sog-btn').addEventListener('click', addSog);
 
@@ -1308,30 +1295,7 @@ function addSog(){
     sv('FM',molsU);
     extra.uSana=date;
   }
-  if(tur==='Bogozlik'){
-    var molsChk=ld('FM'), targetMol=null;
-    for(var ci=0;ci<molsChk.length;ci++){ if(molsChk[ci].raqam===mol||molsChk[ci].raqam===mol.replace('#','')){ targetMol=molsChk[ci]; break; } }
-    if(!targetMol){ alert(tx('mol_topilmadi')); return; }
-    if(targetMol.tur!=='Sigir' && targetMol.tur!=='Xonajin'){ alert(tx('faqat_sigir_bogoz')); return; }
-    var bOy = parseInt(document.getElementById('sgbo').value)||0;
-    // urug' qo'yilgan sana = TANLANGAN SANA - (oy-1), kutilgan tug'ish = urug' + 9 oy
-    var bogozBosh = bOy>=1 ? addMonths(date, -bOy) : date;
-    var kutilgan = addMonths(bogozBosh, 9);
-    extra.bOy = bOy;
-    extra.bSana = kutilgan;
-    document.getElementById('sgku').value = kutilgan;
-    var mols=ld('FM');
-    for(var i=0;i<mols.length;i++){
-      if(mols[i].raqam===mol||mols[i].raqam===mol.replace('#','')){
-        mols[i].holat='Bogoz';
-        mols[i].bogoz=bOy;
-        mols[i].bogozBosh=bogozBosh;
-        mols[i].kutilgan=kutilgan;
-        break;
-      }
-    }
-    sv('FM',mols);
-  }
+
   if(tur==='Davolash'){
     var molsD=ld('FM');
     for(var di=0;di<molsD.length;di++){ if(molsD[di].raqam===mol||molsD[di].raqam===mol.replace('#','')){ molsD[di].holat='Davolashda'; break; } }
