@@ -966,6 +966,12 @@ function openMolDetail(id){
     H+='<div class="mdrow"><span>'+tx('boshlangan_sana')+'</span><strong>'+fd(m.bogozBosh)+'</strong></div>';
     if(joriyOy) H+='<div class="mdrow"><span>'+tx('joriy_oy')+'</span><strong>'+joriyOy+'-oy</strong></div>';
     H+='<div class="mdrow"><span>'+tx('kutilgan_tugish')+'</span><strong>'+fd(kut)+'</strong></div>';
+    if(joriyOy >= 7) {
+      H+='<div style="display:flex; gap:8px; margin-top:12px;">'
+        + '<button class="btn bo" style="flex:1; font-size:12px;" data-tugdi-mol="'+m.id+'">🐣 Tug\'di</button>'
+        + '<button class="btn bs" style="flex:1; font-size:12px; background:var(--rd);" data-tugmadi-mol="'+m.id+'">❌ Tug\'madi</button>'
+        + '</div>';
+    }
     H+='</div>';
   }
   var tugArx = m.tugList && m.tugList.length ? m.tugList : (m.tugSana ? [{sana:m.tugSana, bolalar:[], soni:1}] : []);
@@ -1016,12 +1022,52 @@ function closeMolDetail(){ document.getElementById('mdet-mask').style.display='n
 (function(){ var a=document.getElementById('mdet-close'); if(a) a.addEventListener('click', closeMolDetail); var b=document.getElementById('mdet-mask'); if(b) b.addEventListener('click', closeMolDetail);
   var body=document.getElementById('mdet-body');
   if(body) body.addEventListener('click', function(e){
-    var link=e.target.closest('[data-go-mol]'); if(!link) return;
-    e.preventDefault();
-    var raqam=link.getAttribute('data-go-mol');
-    var target=ld('FM').filter(function(x){ return String(x.raqam)===String(raqam); })[0];
-    if(target) openMolDetail(target.id);
-    else alert(tx('mol_topilmadi'));
+    var link=e.target.closest('[data-go-mol]'); 
+    if(link){
+      e.preventDefault();
+      var raqam=link.getAttribute('data-go-mol');
+      var target=ld('FM').filter(function(x){ return String(x.raqam)===String(raqam); })[0];
+      if(target) openMolDetail(target.id);
+      else alert(tx('mol_topilmadi'));
+      return;
+    }
+    
+    var tLink=e.target.closest('[data-tugdi-mol]');
+    if(tLink){
+      e.preventDefault();
+      var mid=tLink.getAttribute('data-tugdi-mol');
+      var m = ld('FM').filter(function(x){ return x.id == mid; })[0];
+      if(m){
+        closeMolDetail();
+        showPg('sog');
+        var sgt = document.getElementById('sgt');
+        if(sgt) { sgt.value = 'Tugish'; sgt.dispatchEvent(new Event('change')); }
+        var sgm = document.getElementById('sgm');
+        if(sgm) sgm.value = m.raqam;
+      }
+      return;
+    }
+
+    var nLink=e.target.closest('[data-tugmadi-mol]');
+    if(nLink){
+      e.preventDefault();
+      if(!confirm("Haqiqatan ham tug'madi (homila yo'qotilgan) deb belgilamoqchimisiz?")) return;
+      var mid = nLink.getAttribute('data-tugmadi-mol');
+      var mols = ld('FM');
+      for(var i=0; i<mols.length; i++){
+        if(mols[i].id == mid){
+          mols[i].holat = 'Soglom';
+          mols[i].bogoz = '';
+          mols[i].bogozBosh = '';
+          mols[i].kutilgan = '';
+          break;
+        }
+      }
+      sv('FM', mols);
+      closeMolDetail();
+      if(typeof renderMolGrid === 'function') renderMolGrid();
+      return;
+    }
   });
 })();
 
@@ -1264,8 +1310,15 @@ function addSog(){
     function nextMolNum(){ var mx=0; mols2.forEach(function(m){ var n=parseInt(String(m.raqam||'').replace(/\D/g,'')); if(!isNaN(n)&&n>mx) mx=n; }); return mx+1; }
     var baseN = parseInt(String(extra.tRaq||'').replace(/\D/g,''));
     var createdNums=[];
+    var r2el = document.getElementById('sgtr2');
+    var rq2 = (r2el && r2el.value.trim()) ? r2el.value.trim().slice(0,20) : '';
     for(var bi=0; bi<cnt; bi++){
-      var rq = (!isNaN(baseN)) ? String(baseN+bi) : String(nextMolNum());
+      var rq;
+      if (bi === 0) {
+        rq = extra.tRaq || String(nextMolNum());
+      } else {
+        rq = rq2 || ((!isNaN(baseN)) ? String(baseN+bi) : String(nextMolNum()));
+      }
       createdNums.push(rq);
       mols2.push({ id:Date.now()+bi+1, raqam:rq, tur:'Bezov', yosh:'', vazn:extra.tVazn||'', holat:'Soglom', bogoz:'', ona:(mol||'').replace('#',''), q:date, tugganMi:true, bezovJins:(jinsList[bi]||jinsList[0]) });
     }
@@ -1307,9 +1360,10 @@ function addSog(){
   var tav=document.getElementById('sgtav').value.trim().slice(0,500);
   var recs=ld('FG'); recs.push(Object.assign({id:Date.now(),date:date,tur:tur,mol:mol,dori:dori,doza:doza,key:key,tav:tav,w:CU.name},extra));
   sv('FG',recs);
-  ['sgm','sgdr','sgdz','sgky','sgtav','sgtv','sgtr','sgbo','sgku'].forEach(function(id){ var e=document.getElementById(id);if(e)e.value=''; });
+  ['sgm','sgdr','sgdz','sgky','sgtav','sgtv','sgtr','sgtr2','sgbo','sgku'].forEach(function(id){ var e=document.getElementById(id);if(e)e.value=''; });
   var sgtsR=document.getElementById('sgts'); if(sgtsR) sgtsR.value='1';
   var sgw2R=document.getElementById('sgtt2-wrap'); if(sgw2R) sgw2R.style.display='none';
+  var sgr2R=document.getElementById('sgtr2-wrap'); if(sgr2R) sgr2R.style.display='none';
   document.getElementById('tug-f').style.display='none';
   document.getElementById('bog-f').style.display='none';
   document.getElementById('urug-f').style.display='none';

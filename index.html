@@ -339,7 +339,7 @@
                 </select>
               </div>
               <div class="fg"><label data-l="tug_soni">Soni</label>
-                <select id="sgts" onchange="var w=document.getElementById('sgtt2-wrap');if(w)w.style.display=(this.value==='2')?'':'none'">
+                <select id="sgts" onchange="var w1=document.getElementById('sgtt2-wrap'), w2=document.getElementById('sgtr2-wrap'); if(w1)w1.style.display=(this.value==='2')?'':'none'; if(w2)w2.style.display=(this.value==='2')?'':'none';">
                   <option value="1" data-l="opt_1ta">1 ta</option>
                   <option value="2" data-l="opt_2ta">2 ta (egizak)</option>
                 </select>
@@ -351,7 +351,8 @@
                 </select>
               </div>
               <div class="fg"><label data-l="tug_vazni">Vazni (kg)</label><input type="number" id="sgtv" placeholder="35" inputmode="numeric"></div>
-              <div class="fg"><label data-l="tug_raqami">Yangi raqami</label><input type="text" id="sgtr" placeholder="#150"></div>
+              <div class="fg"><label data-l="tug_raqami">Yangi raqami (1-bola)</label><input type="text" id="sgtr" placeholder="#150"></div>
+              <div class="fg" id="sgtr2-wrap" style="display:none"><label data-l="tug_raqami2">Yangi raqami (2-bola)</label><input type="text" id="sgtr2" placeholder="#151"></div>
             </div>
           </div>
           <div id="urug-f" style="display:none">
