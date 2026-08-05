@@ -753,13 +753,11 @@ document.getElementById('mt').addEventListener('change', function(){
   }
 });
 
-document.getElementById('mol-tabs').addEventListener('click', function(e){
-  var btn=e.target.closest('.tab');
+document.getElementById('mol-sg').addEventListener('click', function(e){
+  var btn=e.target.closest('.sc');
   if(!btn) return;
   var f=btn.getAttribute('data-mf');
   if(!f) return;
-  document.querySelectorAll('#mol-tabs .tab').forEach(function(b){ b.classList.remove('on'); });
-  btn.classList.add('on');
   renderMolGrid(f);
 });
 (function(){ var ms=document.getElementById('mol-search'); if(ms) ms.addEventListener('input', function(){ molSearch=this.value; renderMolGrid(); }); })();
@@ -832,23 +830,28 @@ function renderMolGrid(filter){
   });
   var _q=(molSearch||'').trim().toLowerCase();
   if(_q) fl=fl.filter(function(m){ return String(m.raqam||'').toLowerCase().indexOf(_q)>=0; });
-  var tot=active.length,nov=0,sig=0,bez=0,xon=0,bog=0,kas=0,bezN=0,bezX=0;
+  var tot=active.length,nov=0,sig=0,bez=0,xon=0,bog=0,kas=0,dav=0,bezN=0,bezX=0;
   active.forEach(function(m){
     if(m.tur==='Novvos') nov++;
     if(m.tur==='Sigir') sig++;
     if(m.tur==='Bezov'){ bez++; if(m.bezovJins==='Novvos') bezN++; else if(m.bezovJins==='Xonajin') bezX++; }
     if(m.tur==='Xonajin') xon++;
     if(m.holat==='Bogoz') bog++;
-    if(m.holat==='Kasal'||m.holat==='Davolashda') kas++;
+    if(m.holat==='Kasal') kas++;
+    if(m.holat==='Davolashda') dav++;
   });
+  var sold = mols.filter(function(m){ return m.sold; }).length;
+  function st(f){ return curMolFilter===f ? 'cursor:pointer;box-shadow:0 0 0 2.5px var(--gm) inset;background:rgba(216,243,220,0.8);' : 'cursor:pointer;'; }
   document.getElementById('mol-sg').innerHTML=
-    '<div class="sc so"><div class="si">🐄</div><div class="sv">'+tot+'</div><div class="sl">'+tx('jami')+'</div></div>'
-    +'<div class="sc gn"><div class="si">🐂</div><div class="sv">'+nov+'</div><div class="sl">'+tx('tur_novvos')+'</div></div>'
-    +'<div class="sc gn"><div class="si">🐄</div><div class="sv">'+sig+'</div><div class="sl">'+tx('tur_sigir')+'</div></div>'
-    +'<div class="sc tl"><div class="si">🐃</div><div class="sv">'+bez+'</div><div class="sl">'+tx('tur_bezov')+'</div></div>'
-    +'<div class="sc am"><div class="si">🐮</div><div class="sv">'+xon+'</div><div class="sl">'+tx('tur_xonajin')+'</div></div>'
-    +'<div class="sc pu"><div class="si">🤰</div><div class="sv">'+bog+"</div><div class=\"sl\">"+tx('bogoz')+"</div></div>"
-    +'<div class="sc rd"><div class="si">⚠️</div><div class="sv">'+kas+'</div><div class="sl">'+tx('kasal')+'</div></div>';
+    '<div class="sc so" data-mf="all" style="'+st('all')+'"><div class="si">🐄</div><div class="sv">'+tot+'</div><div class="sl">'+tx('jami')+'</div></div>'
+    +'<div class="sc gn" data-mf="Novvos" style="'+st('Novvos')+'"><div class="si">🐂</div><div class="sv">'+nov+'</div><div class="sl">'+tx('tur_novvos')+'</div></div>'
+    +'<div class="sc gn" data-mf="Sigir" style="'+st('Sigir')+'"><div class="si">🐄</div><div class="sv">'+sig+'</div><div class="sl">'+tx('tur_sigir')+'</div></div>'
+    +'<div class="sc tl" data-mf="Bezov" style="'+st('Bezov')+'"><div class="si">🐃</div><div class="sv">'+bez+'</div><div class="sl">'+tx('tur_bezov')+'</div></div>'
+    +'<div class="sc am" data-mf="Xonajin" style="'+st('Xonajin')+'"><div class="si">🐮</div><div class="sv">'+xon+'</div><div class="sl">'+tx('tur_xonajin')+'</div></div>'
+    +'<div class="sc pu" data-mf="Bogoz" style="'+st('Bogoz')+'"><div class="si">🤰</div><div class="sv">'+bog+"</div><div class=\"sl\">"+tx('bogoz')+"</div></div>"
+    +'<div class="sc rd" data-mf="Kasal" style="'+st('Kasal')+'"><div class="si">⚠️</div><div class="sv">'+kas+'</div><div class="sl">'+tx('kasal')+'</div></div>'
+    +'<div class="sc am" data-mf="Davolashda" style="'+st('Davolashda')+'"><div class="si">💊</div><div class="sv">'+dav+'</div><div class="sl">'+tx('davolashda')+'</div></div>'
+    +'<div class="sc so" data-mf="sold" style="'+st('sold')+'"><div class="si">💰</div><div class="sv">'+sold+'</div><div class="sl">'+tx('sotilgan')+'</div></div>';
   var _bd=document.getElementById('mol-bezbd');
   if(_bd) _bd.innerHTML = (curMolFilter==='Bezov' && bez>0) ? '<div class="card" style="padding:12px 14px;margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--gm);margin-bottom:6px">🐃 '+tx('bezov_jinsi')+'</div><div style="font-size:14px">🐂 <strong>'+bezN+'</strong> '+tx('tur_novvos')+' \u00b7 🐮 <strong>'+bezX+'</strong> '+tx('tur_xonajin')+'</div></div>' : '';
   var grid=document.getElementById('mol-grid'); grid.innerHTML='';
