@@ -797,6 +797,7 @@ function addMol(){
 }
 
 function delMol(id){
+  if(!confirm(tx('ochirish_tasdiq'))) return;
   sv('FM', ld('FM').filter(function(m){ return m.id!==id; }));
   renderMolGrid(); updateDash();
 }
