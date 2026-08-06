@@ -165,7 +165,7 @@ var YB = [
 ];
 var YEM_MAP = {sigir:YS, xonajin:YX, buzoq:YB};
 var GURUH_LABEL = {sigir:'Sigirlar', xonajin:'Xonajinlar', buzoq:'Buzoqlar'};
-var HOL_DISP = {Soglom:"Sog'lom", Bogoz:"Bo'g'oz", Kasal:'Kasal', Davolashda:'Davolashda', Tekshiruv:'Tekshiruv kutilmoqda'};
+var HOL_DISP = {Soglom:"Sog'lom", Bogoz:"Bo'g'oz", Kasal:'Kasal', Tekshiruv:'Tekshiruv kutilmoqda'};
 var SOG_DISP = {Emlash:'Emlash', Davolash:'Davolash', Tugish:"Tug'ish", VetKorik:"Vet. ko'rigi", Bogozlik:"Bo'g'ozlik", Boshqa:'Boshqa'};
 
 // ── STORAGE ──
@@ -820,7 +820,6 @@ function renderMolGrid(filter){
   if(curMolFilter==='sold') fl=mols.filter(function(m){ return m.sold; });
   else if(curMolFilter==='Bogoz') fl=active.filter(function(m){ return m.holat==='Bogoz'; });
   else if(curMolFilter==='Kasal') fl=active.filter(function(m){ return m.holat==='Kasal'; });
-  else if(curMolFilter==='Davolashda') fl=active.filter(function(m){ return m.holat==='Davolashda'; });
   else if(curMolFilter!=='all') fl=active.filter(function(m){ 
     if(m.tur!==curMolFilter) return false;
     if(curMolFilter==='Sigir' && m.holat==='Bogoz'){
@@ -831,7 +830,7 @@ function renderMolGrid(filter){
   });
   var _q=(molSearch||'').trim().toLowerCase();
   if(_q) fl=fl.filter(function(m){ return String(m.raqam||'').toLowerCase().indexOf(_q)>=0; });
-  var tot=active.length,nov=0,sig=0,bez=0,xon=0,bog=0,kas=0,dav=0,bezN=0,bezX=0;
+  var tot=active.length,nov=0,sig=0,bez=0,xon=0,bog=0,kas=0,bezN=0,bezX=0;
   active.forEach(function(m){
     if(m.tur==='Novvos') nov++;
     if(m.tur==='Sigir') sig++;
@@ -839,7 +838,6 @@ function renderMolGrid(filter){
     if(m.tur==='Xonajin') xon++;
     if(m.holat==='Bogoz') bog++;
     if(m.holat==='Kasal') kas++;
-    if(m.holat==='Davolashda') dav++;
   });
   var sold = mols.filter(function(m){ return m.sold; }).length;
   function st(f){ return curMolFilter===f ? 'cursor:pointer;box-shadow:0 0 0 2.5px var(--gm) inset;background:rgba(216,243,220,0.8);' : 'cursor:pointer;'; }
@@ -851,13 +849,12 @@ function renderMolGrid(filter){
     +'<div class="sc am" data-mf="Xonajin" style="'+st('Xonajin')+'"><div class="si">🐮</div><div class="sv">'+xon+'</div><div class="sl">'+tx('tur_xonajin')+'</div></div>'
     +'<div class="sc pu" data-mf="Bogoz" style="'+st('Bogoz')+'"><div class="si">🤰</div><div class="sv">'+bog+"</div><div class=\"sl\">"+tx('bogoz')+"</div></div>"
     +'<div class="sc rd" data-mf="Kasal" style="'+st('Kasal')+'"><div class="si">⚠️</div><div class="sv">'+kas+'</div><div class="sl">'+tx('kasal')+'</div></div>'
-    +'<div class="sc am" data-mf="Davolashda" style="'+st('Davolashda')+'"><div class="si">💊</div><div class="sv">'+dav+'</div><div class="sl">'+tx('davolashda')+'</div></div>'
     +'<div class="sc so" data-mf="sold" style="'+st('sold')+'"><div class="si">💰</div><div class="sv">'+sold+'</div><div class="sl">'+tx('sotilgan')+'</div></div>';
   var _bd=document.getElementById('mol-bezbd');
   if(_bd) _bd.innerHTML = (curMolFilter==='Bezov' && bez>0) ? '<div class="card" style="padding:12px 14px;margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--gm);margin-bottom:6px">🐃 '+tx('bezov_jinsi')+'</div><div style="font-size:14px">🐂 <strong>'+bezN+'</strong> '+tx('tur_novvos')+' \u00b7 🐮 <strong>'+bezX+'</strong> '+tx('tur_xonajin')+'</div></div>' : '';
   var grid=document.getElementById('mol-grid'); grid.innerHTML='';
   document.getElementById('mol-empty').style.display=fl.length?'none':'block';
-  var hcls={Soglom:'bgn',Bogoz:'bpu',Kasal:'brd',Davolashda:'bam',Tekshiruv:'bam'};
+  var hcls={Soglom:'bgn',Bogoz:'bpu',Kasal:'brd',Tekshiruv:'bam'};
   var tico={Novvos:'🐂',Sigir:'🐄',Bezov:'🐃',Xonajin:'🐮',Buqa:'🐂',Qocha:'🐄'};
   fl.forEach(function(m){
     var c=document.createElement('div'); c.className='mcard'; c.setAttribute('data-mol-id', m.id);
@@ -923,7 +920,7 @@ function openMolDetail(id){
   document.getElementById('mdet-edit').style.display='';
   document.getElementById('mdet-editform').style.display='none';
   var tico={Novvos:'🐂',Sigir:'🐄',Bezov:'🐃',Xonajin:'🐮'};
-  var hcls={Soglom:'bgn',Bogoz:'bpu',Kasal:'brd',Davolashda:'bam',Tekshiruv:'bam'};
+  var hcls={Soglom:'bgn',Bogoz:'bpu',Kasal:'brd',Tekshiruv:'bam'};
   var H='';
   H+='<div class="mdhead"><div class="mdico">'+(tico[m.tur]||'🐄')+'</div><div><div class="mdname">#'+esc(m.raqam)+'</div>'
     +'<span class="badge '+(hcls[m.holat]||'bgn')+'">'+(m.sold?('💰 '+tx('sotilgan')):(HOL_DISP[m.holat]||m.holat||''))+'</span></div></div>';
@@ -1338,6 +1335,10 @@ function addSog(){
     }
     sv('FM', mols2);
     extra.tRaqlar = createdNums.join(', ');
+    
+    var un = ld('UN');
+    un.push({ mol: mol, time: Date.now() + 50 * 24 * 60 * 60 * 1000 }); // 50 kun
+    sv('UN', un);
   }
   if(tur==='Urugqoyish'){
     var molsU=ld('FM'), targetU=null;
@@ -1970,6 +1971,15 @@ function buildNotifs(){
     if(qol<200) add('red','📦','Yem tugayapti','"'+fName(tur)+'" — atigi '+qol+' kg qoldi','inv'+tur+mo);
     else if(qol<500) add('org','📦','Yem zaxirasi kam','"'+fName(tur)+'" — '+qol+' kg qoldi','inv'+tur+mo);
   });
+  
+  // Urug' qo'yish 50-kunlik notification
+  var nowTime = Date.now();
+  ld('UN').forEach(function(u) {
+    if (nowTime >= u.time) {
+      add('red', '🔔', "Urug' qo'yish", "Mol #" + esc(u.mol) + " tug'di! Urug' qo'yishga tayyorlang.", 'un_' + u.mol + '_' + u.time);
+    }
+  });
+
   var ord={red:0,org:1,blue:2}; N.sort(function(a,b){return ord[a.pri]-ord[b.pri];});
   return N;
 }
@@ -2166,4 +2176,4 @@ applyLang();
 boot();
 setInterval(function() {
   if (typeof CU !== 'undefined' && CU) refreshNotifs();
-}, 60000);
+}, 5000);
