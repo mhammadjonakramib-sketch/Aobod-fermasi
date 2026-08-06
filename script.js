@@ -172,8 +172,8 @@ var SOG_DISP = {Emlash:'Emlash', Davolash:'Davolash', Tugish:"Tug'ish", VetKorik
 // ── DATA LAYER (Supabase + kesh) ──
 var sb = null;
 // ── Supabase ulanish (oldindan yozilgan) ──
-var SB_DEFAULT_URL = 'https://lfgqpvpgzrsqknxrrnqc.supabase.co';
-var SB_DEFAULT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3FwdnBnenJzcWtueHJybnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MjQxMzgsImV4cCI6MjA5NzIwMDEzOH0.mfCuZzBk6vQ_zstW7H_RQ22WoL_CzvnwMsNnBcgX1YI';
+var SB_DEFAULT_URL = 'https://mrbtwmvqqnofrrjncsms.supabase.co';
+var SB_DEFAULT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yYnR3bXZxcW5vZnJyam5jc21zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMTUzOTMsImV4cCI6MjEwMTU5MTM5M30.aHkmr9bTgcUd_N_W_I2ig82yHdGRsj6KEllXkiJ4MXo';
 var DB = {FS:[], FY:[], FK:[], FM:[], FG:[]};
 var _snap = {FS:[], FY:[], FK:[], FM:[], FG:[]};
 var SETT = {};
