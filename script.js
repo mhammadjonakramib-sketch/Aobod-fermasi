@@ -423,7 +423,7 @@ function showPg(id){
   if(id==='dar') renderDar();
   if(id==='ombor') renderOmbor();
   if(id==='kel') renderKel();
-  if(id==='sog') renderSog();
+  if(id==='sog'){ var sgt = document.getElementById('sgt'); if(sgt) sgt.disabled = false; renderSog(); }
   if(id==='mol') renderMolGrid();
   if(id==='sutolchov') renderSutOlchov();
   if(id==='users') renderUsers();
@@ -1042,7 +1042,7 @@ function closeMolDetail(){ document.getElementById('mdet-mask').style.display='n
         closeMolDetail();
         showPg('sog');
         var sgt = document.getElementById('sgt');
-        if(sgt) { sgt.value = 'Tugish'; sgt.dispatchEvent(new Event('change')); }
+        if(sgt) { sgt.value = 'Tugish'; sgt.disabled = true; sgt.dispatchEvent(new Event('change')); }
         var sgm = document.getElementById('sgm');
         if(sgm) sgm.value = m.raqam;
       }
@@ -1365,6 +1365,7 @@ function addSog(){
   var tav=document.getElementById('sgtav').value.trim().slice(0,500);
   var recs=ld('FG'); recs.push(Object.assign({id:Date.now(),date:date,tur:tur,mol:mol,dori:dori,doza:doza,key:key,tav:tav,w:CU.name},extra));
   sv('FG',recs);
+  var sgtEl=document.getElementById('sgt'); if(sgtEl) sgtEl.disabled = false;
   ['sgm','sgdr','sgdz','sgky','sgtav','sgtv','sgtr','sgtr2','sgbo','sgku'].forEach(function(id){ var e=document.getElementById(id);if(e)e.value=''; });
   var sgtsR=document.getElementById('sgts'); if(sgtsR) sgtsR.value='1';
   var sgw2R=document.getElementById('sgtt2-wrap'); if(sgw2R) sgw2R.style.display='none';
