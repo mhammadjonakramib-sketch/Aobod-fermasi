@@ -2126,7 +2126,7 @@ function closeReport(){ var a=document.getElementById('printArea'); if(a){ a.sty
 window.addEventListener('afterprint', function(){ document.body.classList.remove('printing'); });
 
 function exportExcel(){
-  var mo=expMonth(), D=repData(mo), now=new Date(), farm=(ldO('FSET').name)||'A.O. Obod', rows=[];
+  var mo=expMonth(), D=repData(mo), now=new Date(), farm=(ldO('FSET').name)||'Soxibjon Farm', rows=[];
   rows.push(['FERMA HISOBOTI']); rows.push([farm]); rows.push(['Davr', mo||'Barchasi']); rows.push(['Yaratilgan', fd(now.toISOString().slice(0,10))]); rows.push([]);
   rows.push(['SUT']); rows.push(['Korsatkich','Qiymat']); rows.push(['Jami sut (L)',D.tS]); rows.push(['Kompaniyaga (L)',D.tK]); rows.push(['Tashqariga (L)',D.tT]); rows.push(['Buzoqlarga (L)',D.tB]); rows.push(["O'rtacha/kun (L)",D.ort]); rows.push(['Ishchilarga (L)',D.tI]); rows.push(["O'rtacha 1 bosh/kun (L)",D.ortBosh]); rows.push([]);
   rows.push(['KUNLIK SUT']); rows.push(['Sana','Litr']); Object.keys(D.bD).sort().forEach(function(d){ rows.push([fd(d), D.bD[d]]); }); rows.push([]);
