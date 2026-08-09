@@ -312,7 +312,7 @@ async function afterLogin(user){
   show('cfg','none'); show('ls','none'); show('app','block');
   var un=document.getElementById('uname'), ur=document.getElementById('urole');
   if(un) un.textContent=CU.name; if(ur) ur.textContent=CU.rl;
-  busy(false);
+  setTimeout(function(){ busy(false); }, 2500);
   applyPerm(); setDefs(); buildAllYem();
   updateDash(); renderSut(); renderYemH(); renderMolGrid(); renderSog(); renderKel(); renderOmbor();
   refreshNotifs(); /* login'da popup yo'q — faqat qo'ng'iroq badge */

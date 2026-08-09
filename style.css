@@ -1765,3 +1765,16 @@ input[type="search"]:focus {
   filter: brightness(1.1);
 }
 
+
+.busy {
+  display: none;
+  background: var(--gp);
+  color: var(--gd);
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.busy.on {
+  display: block;
+}
