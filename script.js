@@ -851,9 +851,10 @@ function renderMolGrid(filter){
   var active=mols.filter(function(m){ return !m.sold; });
   var fl=active;
   if(curMolFilter==='sold') fl=mols.filter(function(m){ return m.sold; });
-  else if(curMolFilter==='Bogoz') fl=active.filter(function(m){ return m.holat==='Bogoz'; });
-  else if(curMolFilter==='Kasal') fl=active.filter(function(m){ return m.holat==='Kasal'; });
+  else if(curMolFilter==='Bogoz') fl=active.filter(function(m){ return m.holat==='Bogoz' && !m.antibiotik; });
+  else if(curMolFilter==='Kasal') fl=active.filter(function(m){ return m.holat==='Kasal' || m.antibiotik; });
   else if(curMolFilter!=='all') fl=active.filter(function(m){ 
+    if(m.antibiotik) return false;
     if(m.tur!==curMolFilter) return false;
     if(curMolFilter==='Sigir' && m.holat==='Bogoz'){
       var oy = m.bogozBosh ? hozirgiBogozOy(m.bogozBosh) : (parseInt(m.bogoz)||0);
@@ -865,8 +866,16 @@ function renderMolGrid(filter){
   if(_q) fl=fl.filter(function(m){ return String(m.raqam||'').toLowerCase().indexOf(_q)>=0; });
   var tot=active.length,nov=0,sig=0,bez=0,xon=0,bog=0,kas=0,bezN=0,bezX=0;
   active.forEach(function(m){
+    if(m.antibiotik) { kas++; return; }
     if(m.tur==='Novvos') nov++;
-    if(m.tur==='Sigir') sig++;
+    if(m.tur==='Sigir'){
+      if(m.holat==='Bogoz'){
+        var oy = m.bogozBosh ? hozirgiBogozOy(m.bogozBosh) : (parseInt(m.bogoz)||0);
+        if(oy < 7) sig++;
+      } else {
+        sig++;
+      }
+    }
     if(m.tur==='Bezov'){ bez++; if(m.bezovJins==='Novvos') bezN++; else if(m.bezovJins==='Xonajin') bezX++; }
     if(m.tur==='Xonajin') xon++;
     if(m.holat==='Bogoz') bog++;
@@ -894,7 +903,7 @@ function renderMolGrid(filter){
     if(m.sold){
       c.innerHTML='<div class="mctop"><div><div class="mnum">'+(tico[m.tur]||'🐄')+' #'+esc(m.raqam)+'</div>'
         +'<span class="badge bam" style="margin-top:5px;display:inline-block">💰 '+tx('sotilgan')+'</span></div>'
-        +'<div style="font-size:24px">'+(tico[m.tur]||'🐄')+'</div></div>'
+        +'<div style="font-size:24px;position:relative;">'+(tico[m.tur]||'🐄')+(m.antibiotik?'<span style="position:absolute;top:-5px;right:-5px;font-size:13px;background:white;border-radius:50%;box-shadow:0 0 2px rgba(0,0,0,0.2);padding:2px;display:flex;align-items:center;justify-content:center;line-height:1;">💊</span>':'')+'</div></div>'
         +'<div class="mdet">📅 '+tx('sotilgan_sana')+': <strong>'+fd(m.sold.date)+'</strong></div>'
         +(m.sold.desc?'<div class="mdet">📝 '+esc(m.sold.desc)+'</div>':'')
         +(m.ona?'<div class="mdet">👩 Onasi: <strong>#'+esc(m.ona)+'</strong></div>':'')
@@ -921,8 +930,8 @@ function renderMolGrid(filter){
     }
     c.innerHTML='<div class="mctop">'
       +'<div><div class="mnum">'+(tico[m.tur]||'🐄')+' #'+esc(m.raqam)+'</div>'
-      +'<span class="badge '+(hcls[m.holat]||'bgn')+'" style="margin-top:5px;display:inline-block">'+(HOL_DISP[m.holat]||m.holat)+'</span></div>'
-      +'<div style="font-size:24px">'+(tico[m.tur]||'🐄')+'</div></div>'
+      +'<span class="badge '+(m.antibiotik?'brd':(hcls[m.holat]||'bgn'))+'" style="margin-top:5px;display:inline-block">'+(m.antibiotik?'Kasal (💊)':(HOL_DISP[m.holat]||m.holat))+'</span></div>'
+      +'<div style="font-size:24px;position:relative;">'+(tico[m.tur]||'🐄')+(m.antibiotik?'<span style="position:absolute;top:-5px;right:-5px;font-size:13px;background:white;border-radius:50%;box-shadow:0 0 2px rgba(0,0,0,0.2);padding:2px;display:flex;align-items:center;justify-content:center;line-height:1;">💊</span>':'')+'</div></div>'
       + bezovHtml
       +(m.ona?'<div class="mdet">👩 Onasi: <strong>#'+esc(m.ona)+'</strong></div>':'')
       +(m.yosh?'<div class="mdet">Yoshi: <strong>'+esc(m.yosh)+'</strong></div>':'')
@@ -955,8 +964,8 @@ function openMolDetail(id){
   var tico={Novvos:'🐂',Sigir:'🐄',Bezov:'🐃',Xonajin:'🐮'};
   var hcls={Soglom:'bgn',Bogoz:'bpu',Kasal:'brd',Tekshiruv:'bam'};
   var H='';
-  H+='<div class="mdhead"><div class="mdico">'+(tico[m.tur]||'🐄')+'</div><div><div class="mdname">#'+esc(m.raqam)+'</div>'
-    +'<span class="badge '+(hcls[m.holat]||'bgn')+'">'+(m.sold?('💰 '+tx('sotilgan')):(HOL_DISP[m.holat]||m.holat||''))+'</span></div></div>';
+  H+='<div class="mdhead"><div class="mdico" style="position:relative;">'+(tico[m.tur]||'🐄')+(m.antibiotik?'<span style="position:absolute;top:-2px;right:-2px;font-size:16px;background:white;border-radius:50%;box-shadow:0 0 2px rgba(0,0,0,0.2);padding:2px;display:flex;align-items:center;justify-content:center;line-height:1;">💊</span>':'')+'</div><div><div class="mdname">#'+esc(m.raqam)+'</div>'
+    +'<span class="badge '+(m.sold?'bam':(m.antibiotik?'brd':(hcls[m.holat]||'bgn')))+'">'+(m.sold?('💰 '+tx('sotilgan')):(m.antibiotik?'Kasal (💊)':(HOL_DISP[m.holat]||m.holat||'')))+'</span></div></div>';
 
   // ── Asosiy ma'lumot ──
   H+='<div class="mdsec"><div class="mdst">📋 '+tx('asosiy_malumot')+'</div>';
@@ -1054,6 +1063,10 @@ function openMolDetail(id){
   } else H+='<div style="font-size:13px;color:var(--tm)">'+tx('tarix_yoq')+'</div>';
   H+='</div>';
 
+  if (!m.sold) {
+    H += '<button class="btn '+ (m.antibiotik ? 'bs' : 'bo') +'" style="width:100%; margin-top:12px; font-weight:600; '+(m.antibiotik ? 'background:var(--rd); border-color:var(--rd);' : '')+'" data-anti-mol="'+m.id+'">💊 '+(m.antibiotik ? 'Antibiotikni to\'xtatish' : 'Antibiotik berish')+'</button>';
+  }
+
   document.getElementById('mdet-body').innerHTML=H;
   document.getElementById('mdet-mask').style.display='block';
   document.getElementById('mdet-modal').style.display='block';
@@ -1062,6 +1075,28 @@ function closeMolDetail(){ document.getElementById('mdet-mask').style.display='n
 (function(){ var a=document.getElementById('mdet-close'); if(a) a.addEventListener('click', closeMolDetail); var b=document.getElementById('mdet-mask'); if(b) b.addEventListener('click', closeMolDetail);
   var body=document.getElementById('mdet-body');
   if(body) body.addEventListener('click', function(e){
+    var aLink=e.target.closest('[data-anti-mol]');
+    if(aLink){
+      e.preventDefault();
+      var mid=aLink.getAttribute('data-anti-mol');
+      var mols=ld('FM');
+      var mol = mols.filter(function(x){ return x.id == mid; })[0];
+      if(mol){
+        mol.antibiotik = !mol.antibiotik;
+        sv('FM', mols);
+        if (mol.antibiotik) {
+          curMolFilter = 'Kasal';
+        } else {
+          curMolFilter = mol.tur;
+        }
+        closeMolDetail();
+        renderMolGrid();
+        updateDash();
+        alert('✅ Saqlandi!');
+      }
+      return;
+    }
+    
     var link=e.target.closest('[data-go-mol]'); 
     if(link){
       e.preventDefault();
