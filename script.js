@@ -5,7 +5,7 @@ var L = {
     ferma_nomi:'Akramjon Olimjon Obod F/X', login_err:"Login yoki parol noto'g'ri",
     login_label:'Foydalanuvchi nomi', parol_label:'Parol', kirish:'🔐 Kirish', chiqish:'Chiqish',
     nav_bosh:'Bosh', nav_sut:'Sut', nav_yem:'Yem', nav_mol:'Mollar', nav_sog:"Sog'liq",
-    nav_kel:'Yem kelish', nav_ombor:'Ombor', nav_dar:'Daromad', nav_his:'Hisobot',
+    nav_kel:'Yem kelish', nav_ombor:'Ombor', nav_dar:'Daromad', nav_his:'Hisobot', nav_xar:'Xarajatlar',
     bugungi_sut:'Bugungi sut', buzoglarga:"Buzog'larga", bugungi_yem:'Bugungi yem',
     jami_mol:'Jami mol', bu_oygi_sut:'Bu oygi sut', bu_oygi_yem:'Bu oygi yem',
     ortacha:"O'rtacha sut/kun", ortacha_bugun:"O'rtacha 1 mol/kun", songgi_sut:"So'nggi sut", songgi_yem:"So'nggi yem", rep_title:'Ferma hisoboti', rep_all:'Barcha davr', rep_gen:'Avtomatik yaratilgan hisobot', rep_s1:'Sut ishlab chiqarish', rep_s2:'Yem sarfi', rep_s3:'Daromad va tannarx', rep_s4:'Mol salomatligi', rep_s5:'Oylik voqealar', rep_jami_sut:'Jami sut', rep_komp:'Kompaniyaga', rep_tash:'Tashqariga', rep_buz:'Buzoqlarga', rep_ish:'Ishchilarga', rep_ort_kun:"O'rtacha/kun", rep_ort_bosh:"O'rtacha 1 bosh/kun", rep_faol:'Faol kunlar', rep_jami_yem:'Jami yem', rep_narx:'1 litr narxi', rep_yalpi:'Yalpi daromad', rep_xarajat:'Yem xarajati', rep_sof:'Sof foyda', rep_tannarx:'1 litr tannarx', rep_tugilgan:"Tug'ilgan buzoqlar", rep_davolangan:'Davolanganlar', rep_sogaygan:"Sog'ayganlar", rep_emlangan:'Emlanganlar', rep_kasal:'Kasal / davolanayotgan', rep_kutil:"Tug'ishi kutilayotgan", rep_yoq:"Yo'q", rep_kun:'kun', rep_ta:'ta', rep_otdi:"o'tdi", 
@@ -26,6 +26,7 @@ var L = {
     tug_vazni:'Vazni (kg)', tug_raqami:'Yangi raqami',
     kutilgan:"Kutilgan tug'ish", doza:'Doza', keyingi:"Keyingi ko'rik", tavsif:'Tavsif',
     kel_sub:'Fermaga kelgan yemlarni yozish', yangi_kel:'Yangi yem keldi',
+    xar_sub:'Boshqa xarajatlarni yozib borish', yangi_xar:'Yangi xarajat', xar_tarixi:'Xarajatlar tarixi', ishchilar_xar:"Ishchilar (so'm)", elektr:"Elektr energiya (so'm)", yoqilgi:"Yoqilg'i (so'm)", dori_darmon_xar:"Dori-darmon (so'm)",
     yem_turi:'Yem turi', miqdori:'Miqdori', olchov:"O'lchov", narxi:"Narxi (so'm)",
     kim_keltirdi:'Kim keltirdi', kel_tarixi:'Kelgan yemlar',
     ombor_sub:'Keldi - Sarflandi = Qoldi', ombor_holat:'Ombor holati',
@@ -52,7 +53,7 @@ var L = {
     ferma_nomi:'Акрамжон Олимжон Обод Ф/Х', login_err:'Логин ёки парол нотўғри',
     login_label:'Фойдаланувчи номи', parol_label:'Парол', kirish:'🔐 Кириш', chiqish:'Чиқиш',
     nav_bosh:'Бош', nav_sut:'Сут', nav_yem:'Ем', nav_mol:'Моллар', nav_sog:'Соғлиқ',
-    nav_kel:'Ем келиш', nav_ombor:'Омбор', nav_dar:'Даромад', nav_his:'Ҳисобот',
+    nav_kel:'Ем келиш', nav_ombor:'Омбор', nav_dar:'Даромад', nav_his:'Ҳисобот', nav_xar:'Харажатлар',
     bugungi_sut:'Бугунги сут', buzoglarga:'Бузоғларга', bugungi_yem:'Бугунги ем',
     jami_mol:'Жами мол', bu_oygi_sut:'Бу ойги сут', bu_oygi_yem:'Бу ойги ем',
     ortacha:'Ўртача сут/кун', ortacha_bugun:'Ўртача 1 мол/кун', songgi_sut:'Сўнгги сут', songgi_yem:'Сўнгги ем', rep_title:'Ферма ҳисоботи', rep_all:'Барча давр', rep_gen:'Автоматик яратилган ҳисобот', rep_s1:'Сут ишлаб чиқариш', rep_s2:'Ем сарфи', rep_s3:'Даромад ва таннарх', rep_s4:'Мол саломатлиги', rep_s5:'Ойлик воқеалар', rep_jami_sut:'Жами сут', rep_komp:'Компанияга', rep_tash:'Ташқарига', rep_buz:'Бузоқларга', rep_ish:'Ишчиларга', rep_ort_kun:'Ўртача/кун', rep_ort_bosh:'Ўртача 1 бош/кун', rep_faol:'Фаол кунлар', rep_jami_yem:'Жами ем', rep_narx:'1 литр нархи', rep_yalpi:'Ялпи даромад', rep_xarajat:'Ем харажати', rep_sof:'Соф фойда', rep_tannarx:'1 литр таннарх', rep_tugilgan:'Туғилган бузоқлар', rep_davolangan:'Даволанганлар', rep_sogaygan:'Соғайганлар', rep_emlangan:'Эмланганлар', rep_kasal:'Касал / даволанаётган', rep_kutil:'Туғиши кутилаётган', rep_yoq:'Йўқ', rep_kun:'кун', rep_ta:'та', rep_otdi:'ўтди', 
@@ -73,6 +74,7 @@ var L = {
     tug_vazni:'Вазни (кг)', tug_raqami:'Янги рақами',
     kutilgan:'Кутилган туғиш', doza:'Доза', keyingi:'Кейинги кўрик', tavsif:'Тавсиф',
     kel_sub:'Фермага келган емларни ёзиш', yangi_kel:'Янги ем келди',
+    xar_sub:'Бошқа харажатларни ёзиб бориш', yangi_xar:'Янги харажат', xar_tarixi:'Харажатлар тарихи', ishchilar_xar:'Ишчилар (сўм)', elektr:'Электр энергия (сўм)', yoqilgi:'Ёқилғи (сўм)', dori_darmon_xar:'Дори-дармон (сўм)',
     yem_turi:'Ем тури', miqdori:'Миқдори', olchov:'Ўлчов', narxi:'Нархи (сўм)',
     kim_keltirdi:'Ким келтирди', kel_tarixi:'Келган емлар',
     ombor_sub:'Келди - Сарфланди = Қолди', ombor_holat:'Омбор ҳолати',
@@ -422,6 +424,7 @@ function showPg(id){
   if(id==='his'){ renderHis(); renderRanking('all'); }
   if(id==='dar') renderDar();
   if(id==='ombor') renderOmbor();
+  if(id==='xar') renderXar();
   if(id==='kel') renderKel();
   if(id==='sog'){ var sgt = document.getElementById('sgt'); if(sgt) sgt.disabled = false; renderSog(); }
   if(id==='mol') renderMolGrid();
@@ -435,7 +438,7 @@ function setDefs(){
   var td = now.toISOString().slice(0,10);
   var mo = td.slice(0,7);
   ['s1d','yd','sgd','kd'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=td; });
-  ['sut-fm','yem-fm','his-m','dar-m','kel-fm','ombor-m'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=mo; });
+  ['sut-fm','yem-fm','his-m','dar-m','kel-fm','ombor-m','xar-fm','xd'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=mo; });
   document.getElementById('today-d').textContent = now.toLocaleDateString('uz-UZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('sut-fm').addEventListener('change', renderSut);
   document.getElementById('yem-fm').addEventListener('change', renderYemH);
@@ -444,6 +447,7 @@ function setDefs(){
   document.getElementById('narx').addEventListener('input', renderDar);
   document.getElementById('kel-fm').addEventListener('change', renderKel);
   document.getElementById('ombor-m').addEventListener('change', renderOmbor);
+  var xfm = document.getElementById('xar-fm'); if(xfm) xfm.addEventListener('change', renderXar);
 }
 
 // ── SUT ──
@@ -1509,6 +1513,62 @@ document.getElementById('kel-list').addEventListener('click', function(e){
   if(btn) delKel(parseFloat(btn.getAttribute('data-del-kel')));
 });
 
+// ── XARAJATLAR ──
+var _addXarBtn = document.getElementById('add-xar-btn'); if(_addXarBtn) _addXarBtn.addEventListener('click', addXar);
+function addXar(){
+  var date=document.getElementById('xd').value;
+  var ishchi=num('x-ishchi',0,10000000000);
+  var elektr=num('x-elektr',0,10000000000);
+  var yoqilgi=num('x-yoqilgi',0,10000000000);
+  var dori=num('x-dori',0,10000000000);
+  if(!date){ alert(tx('oy_tanla')+'ni kiriting!'); return; }
+  if(ishchi===0 && elektr===0 && yoqilgi===0 && dori===0){ alert('Kamida bitta xarajat kiriting!'); return; }
+  var jami = ishchi + elektr + yoqilgi + dori;
+  var recs=ld('FXar');
+  recs.push({id:Date.now(), date:date, ishchi:ishchi, elektr:elektr, yoqilgi:yoqilgi, dori:dori, jami:jami, w:CU.name});
+  sv('FXar', recs);
+  ['x-ishchi','x-elektr','x-yoqilgi','x-dori'].forEach(function(id){ document.getElementById(id).value=''; });
+  renderXar(); renderDar();
+  showTmpAlert('pg-xar');
+}
+
+function delXar(id){
+  if(!confirm(tx('ochirish_tasdiq'))) return;
+  sv('FXar', ld('FXar').filter(function(r){ return r.id!==id; }));
+  renderXar(); renderDar();
+}
+
+function renderXar(){
+  var mo=document.getElementById('xar-fm').value;
+  var recs=ld('FXar');
+  if(mo) recs=recs.filter(function(r){ return r.date.indexOf(mo)===0; });
+  recs.sort(function(a,b){ return b.date<a.date?-1:b.date>a.date?1:b.id-a.id; });
+  var list=document.getElementById('xar-list');
+  if(!list) return;
+  if(!recs.length){ list.innerHTML='<div class="empty"><div class="ei">💸</div><div class="et">'+tx('yoq')+'</div></div>'; return; }
+  list.innerHTML=recs.map(function(r){
+    var dets = [];
+    if(r.ishchi) dets.push('👤 '+tx('ishchilar_xar')+': '+(r.ishchi).toLocaleString()+" so'm");
+    if(r.elektr) dets.push('⚡ '+tx('elektr')+': '+(r.elektr).toLocaleString()+" so'm");
+    if(r.yoqilgi) dets.push('⛽ '+tx('yoqilgi')+': '+(r.yoqilgi).toLocaleString()+" so'm");
+    if(r.dori) dets.push('💊 '+tx('dori_darmon_xar')+': '+(r.dori).toLocaleString()+" so'm");
+    return '<div class="kelbox">'
+      +'<div class="keltop"><div><div class="keln">💸 Jami: <span style="color:var(--rd)">'+(r.jami).toLocaleString()+' so\'m</span></div><div class="keld">'+fd(r.date)+'</div></div>'
+      +(CU.role==='admin'?'<button class="bd" data-del-xar="'+r.id+'">🗑</button>':'')
+      +'</div>'
+      +'<div style="font-size:13px; margin-top:6px; color:var(--tm)">'+dets.join('<br>')+'</div>'
+      +'<div class="keltags" style="margin-top:8px">'
+      +'<span class="badge bgr">👤 '+(esc(r.w)||'—')+'</span>'
+      +'</div></div>';
+  }).join('');
+}
+
+var _xarList = document.getElementById('xar-list');
+if(_xarList) _xarList.addEventListener('click', function(e){
+  var btn=e.target.closest('[data-del-xar]');
+  if(btn) delXar(parseFloat(btn.getAttribute('data-del-xar')));
+});
+
 // ── OMBOR ──
 function renderOmbor(){
   var mo=document.getElementById('ombor-m').value;
@@ -1730,15 +1790,24 @@ function renderROI(){
   });
   yemXarajat = Math.round(yemXarajat);
 
-  // 3) Sof foyda va 1L tannarx
-  var sofFoyda = yalpiDaromad - yemXarajat;
-  var tannarx = jamiSut>0 ? Math.round(yemXarajat / jamiSut) : 0;
+  // 3) Boshqa xarajatlar (Ishchilar, Elektr, Yoqilg'i, Dori-darmon)
+  var xarRecs = ld('FXar'); if(mo) xarRecs = xarRecs.filter(function(r){ return r.date.indexOf(mo)===0; });
+  var tIshchi=0, tElektr=0, tYoqilgi=0, tDori=0;
+  xarRecs.forEach(function(r){ tIshchi+=(r.ishchi||0); tElektr+=(r.elektr||0); tYoqilgi+=(r.yoqilgi||0); tDori+=(r.dori||0); });
+  var jamiBoshqa = tIshchi + tElektr + tYoqilgi + tDori;
+
+  // 4) Sof foyda va 1L tannarx
+  var jamiXarajat = yemXarajat + jamiBoshqa;
+  var sofFoyda = yalpiDaromad - jamiXarajat;
+  var tannarx = jamiSut>0 ? Math.round(jamiXarajat / jamiSut) : 0;
+
+  var extraXar = (jamiBoshqa>0) ? '<div style="font-size:11.5px; margin-top:8px; line-height:1.4; color:inherit; opacity:0.9">➖ Boshqa xarajatlar:<br>· Ishchilar: <b>'+tIshchi.toLocaleString()+'</b><br>· Elektr: <b>'+tElektr.toLocaleString()+'</b><br>· Yoqilg\'i: <b>'+tYoqilgi.toLocaleString()+'</b><br>· Dori-darmon: <b>'+tDori.toLocaleString()+'</b></div>' : '';
 
   document.getElementById('roi-result').innerHTML =
     '<div class="roi-grid">'
     + '<div class="roi-card roi-green"><div class="roi-icon">💰</div><div class="roi-label">'+tx('roi_yalpi')+'</div><div class="roi-val">'+fmtS(yalpiDaromad)+'</div><div class="roi-sub">'+jamiSut+'L × '+sotuvNarx.toLocaleString()+"</div></div>"
     + '<div class="roi-card roi-orange"><div class="roi-icon">🌾</div><div class="roi-label">'+tx('roi_xarajat')+'</div><div class="roi-val">'+fmtS(yemXarajat)+'</div><div class="roi-sub">'+tx('roi_yem_sarf')+'</div></div>'
-    + '<div class="roi-card '+(sofFoyda>=0?'roi-blue':'roi-red')+'"><div class="roi-icon">'+(sofFoyda>=0?'📈':'📉')+'</div><div class="roi-label">'+tx('roi_foyda')+'</div><div class="roi-val">'+fmtS(sofFoyda)+'</div><div class="roi-sub">'+(sofFoyda>=0?tx('roi_foydali'):tx('roi_zarar'))+'</div></div>'
+    + '<div class="roi-card '+(sofFoyda>=0?'roi-blue':'roi-red')+'" style="height:auto; min-height:120px"><div class="roi-icon">'+(sofFoyda>=0?'📈':'📉')+'</div><div class="roi-label">'+tx('roi_foyda')+'</div><div class="roi-val">'+fmtS(sofFoyda)+'</div><div class="roi-sub">'+(sofFoyda>=0?tx('roi_foydali'):tx('roi_zarar'))+extraXar+'</div></div>'
     + '<div class="roi-card roi-purple"><div class="roi-icon">🥛</div><div class="roi-label">'+tx('roi_tannarx')+'</div><div class="roi-val">'+fmtS(tannarx)+'</div><div class="roi-sub">'+tx('roi_per_litr')+'</div></div>'
     + '</div>';
 }
@@ -1878,7 +1947,7 @@ function drawChart(cid, labels, vals, color, emptyId){
 }
 
 // ── HELPERS ──
-function fd(d){ if(!d) return '—'; var p=d.split('-'); return p[2]+'.'+p[1]+'.'+p[0]; }
+function fd(d){ if(!d) return '—'; var p=d.split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.'+p[0] : p[1]+'.'+p[0]; }
 function fmtS(n){ return n.toLocaleString('uz-UZ')+" so'm"; }
 
 // Sanaga oy qo'shish (manfiy ham bo'ladi)

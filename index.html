@@ -79,6 +79,7 @@
     <button class="nt" data-pg="kel" data-l="nav_kel">📦 Yem kelish</button>
     <button class="nt" data-pg="ombor" data-l="nav_ombor">🏪 Ombor</button>
     <button class="nt admin-only" data-pg="dar" data-l="nav_dar">💰 Daromad</button>
+    <button class="nt admin-only" data-pg="xar" data-l="nav_xar">💸 Xarajatlar</button>
     <button class="nt admin-only" data-pg="his" data-l="nav_his">📊 Hisobot</button>
     <button class="nt admin-only" data-pg="users">👥 Userlar</button>
   </div>
@@ -452,6 +453,31 @@
 
       <div class="card"><div class="ch"><div class="ct">📋 <span data-l="kunlik_dar">Kunlik daromad</span></div></div>
         <div class="cb" id="dar-det"></div></div>
+    </div>
+
+    <!-- XARAJATLAR -->
+    <div class="pg" id="pg-xar">
+      <div class="ph"><div><div class="pt">💸 <span data-l="nav_xar">Xarajatlar</span></div><div class="ps" data-l="xar_sub">Boshqa xarajatlarni yozib borish</div></div></div>
+      <div class="card">
+        <div class="ch"><div class="ct" data-l="yangi_xar">➕ Yangi xarajat</div></div>
+        <div class="cb">
+          <div class="fgr">
+            <div class="fg"><label data-l="oy_tanla">Oy tanlang</label><input type="month" id="xd"></div>
+            <div class="fg"><label data-l="ishchilar_xar">Ishchilar (so'm)</label><input type="number" id="x-ishchi" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="elektr">Elektr energiya (so'm)</label><input type="number" id="x-elektr" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="yoqilgi">Yoqilg'i (so'm)</label><input type="number" id="x-yoqilgi" placeholder="0" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="dori_darmon_xar">Dori-darmon (so'm)</label><input type="number" id="x-dori" placeholder="0" min="0" inputmode="numeric"></div>
+          </div>
+          <button class="btn bs" id="add-xar-btn" data-l="saqlash">💾 Saqlash</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct">📋 <span data-l="xar_tarixi">Xarajatlar tarixi</span></div>
+          <input type="month" id="xar-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
+        </div>
+        <div class="cb" id="xar-list" style="padding:12px"><div class="empty"><div class="ei">💸</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div></div>
+      </div>
     </div>
 
     <!-- HISOBOT -->
