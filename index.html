@@ -76,7 +76,6 @@
     <button class="nt" id="nt-mol" data-pg="mol" data-l="nav_mol">🐮 Mollar</button>
     <button class="nt" id="nt-sutolchov" data-pg="sutolchov">📋 <span data-l="sut_olchash">Sut o'lchash</span></button>
     <button class="nt" id="nt-sog" data-pg="sog" data-l="nav_sog">💉 Sog'liq</button>
-    <button class="nt" data-pg="kel" data-l="nav_kel">📦 Yem kelish</button>
     <button class="nt" data-pg="ombor" data-l="nav_ombor">🏪 Ombor</button>
     <button class="nt admin-only" data-pg="dar" data-l="nav_dar">💰 Daromad</button>
     <button class="nt admin-only" data-pg="xar" data-l="nav_xar">💸 Xarajatlar</button>
@@ -367,49 +366,6 @@
       <div id="sog-list"></div>
     </div>
 
-    <!-- YEM KELISH -->
-    <div class="pg" id="pg-kel">
-      <div class="ph"><div><div class="pt">📦 <span data-l="nav_kel">Yem kelish</span></div><div class="ps" data-l="kel_sub">Fermaga kelgan yemlarni yozish</div></div></div>
-      <div class="card">
-        <div class="ch"><div class="ct" data-l="yangi_kel">➕ Yangi yem keldi</div></div>
-        <div class="cb">
-          <div class="fgr">
-            <div class="fg"><label data-l="sana">Sana</label><input type="date" id="kd"></div>
-            <div class="fg"><label data-l="yem_turi">Yem turi</label>
-              <select id="ktur">
-                <option>Silos Makka</option><option>Beda</option><option>Somon</option>
-                <option>Soya Shrot</option><option>Raps Shrot</option><option>Semichka Shrot</option>
-                <option>Arpa Yarma</option><option>Makka Yarma</option><option>Profat</option>
-                <option>Premiks</option><option>Soda</option><option>Mel</option>
-                <option>Tuz</option><option>Suv</option><option>Boshqa</option>
-              </select>
-            </div>
-            <div class="fg"><label data-l="miqdori">Miqdori</label><input type="number" id="kmiq" placeholder="10" min="0" inputmode="numeric"></div>
-            <div class="fg"><label data-l="olchov">O'lchov</label>
-              <select id="kbr">
-                <option>tonna</option><option>kg</option><option>dona</option><option>litr</option><option>qop</option>
-              </select>
-            </div>
-            <div class="fg"><label data-l="narxi_birlik">1 birlik narxi (so'm)</label><input type="number" id="knarx" placeholder="0" inputmode="numeric"></div>
-            <div class="fg"><label data-l="kim_keltirdi">Kim keltirdi</label><input type="text" id="kkim"></div>
-          </div>
-          <div id="kel-summa" style="background:var(--gp);border:1.5px solid #b7e4c7;border-radius:10px;padding:13px 16px;margin-bottom:12px;display:none">
-            <div style="font-size:12px;color:var(--tm);margin-bottom:3px" data-l="umumiy_summa">Umumiy summa</div>
-            <div style="font-size:22px;font-weight:800;color:var(--gm)" id="kel-summa-val">0 so'm</div>
-            <div style="font-size:11px;color:var(--tm);margin-top:3px" id="kel-summa-hesob"></div>
-          </div>
-          <button class="btn bs" id="add-kel-btn" data-l="saqlash">💾 Saqlash</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="ch">
-          <div class="ct">📋 <span data-l="kel_tarixi">Kelgan yemlar</span></div>
-          <input type="month" id="kel-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
-        </div>
-        <div class="cb" id="kel-list" style="padding:12px"><div class="empty"><div class="ei">📦</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div></div>
-      </div>
-    </div>
-
     <!-- OMBOR -->
     <div class="pg" id="pg-ombor">
       <div class="ph"><div><div class="pt">🏪 <span data-l="nav_ombor">Ombor</span></div><div class="ps" data-l="ombor_sub">Keldi - Sarflandi = Qoldi</div></div></div>
@@ -477,6 +433,45 @@
           <input type="month" id="xar-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
         </div>
         <div class="cb" id="xar-list" style="padding:12px"><div class="empty"><div class="ei">💸</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div></div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><div class="ct" data-l="yangi_kel">➕ Yangi yem keldi</div></div>
+        <div class="cb">
+          <div class="fgr">
+            <div class="fg"><label data-l="sana">Sana</label><input type="date" id="kd"></div>
+            <div class="fg"><label data-l="yem_turi">Yem turi</label>
+              <select id="ktur">
+                <option>Silos Makka</option><option>Beda</option><option>Somon</option>
+                <option>Soya Shrot</option><option>Raps Shrot</option><option>Semichka Shrot</option>
+                <option>Arpa Yarma</option><option>Makka Yarma</option><option>Profat</option>
+                <option>Premiks</option><option>Soda</option><option>Mel</option>
+                <option>Tuz</option><option>Suv</option><option>Boshqa</option>
+              </select>
+            </div>
+            <div class="fg"><label data-l="miqdori">Miqdori</label><input type="number" id="kmiq" placeholder="10" min="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="olchov">O'lchov</label>
+              <select id="kbr">
+                <option>tonna</option><option>kg</option><option>dona</option><option>litr</option><option>qop</option>
+              </select>
+            </div>
+            <div class="fg"><label data-l="narxi_birlik">1 birlik narxi (so'm)</label><input type="number" id="knarx" placeholder="0" inputmode="numeric"></div>
+            <div class="fg"><label data-l="kim_keltirdi">Kim keltirdi</label><input type="text" id="kkim"></div>
+          </div>
+          <div id="kel-summa" style="background:var(--gp);border:1.5px solid #b7e4c7;border-radius:10px;padding:13px 16px;margin-bottom:12px;display:none">
+            <div style="font-size:12px;color:var(--tm);margin-bottom:3px" data-l="umumiy_summa">Umumiy summa</div>
+            <div style="font-size:22px;font-weight:800;color:var(--gm)" id="kel-summa-val">0 so'm</div>
+            <div style="font-size:11px;color:var(--tm);margin-top:3px" id="kel-summa-hesob"></div>
+          </div>
+          <button class="btn bs" id="add-kel-btn" data-l="saqlash">💾 Saqlash</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct">📋 <span data-l="kel_tarixi">Kelgan yemlar</span></div>
+          <input type="month" id="kel-fm" style="padding:6px 10px;border:1.5px solid var(--br);border-radius:8px;font-size:13px;background:var(--cr)">
+        </div>
+        <div class="cb" id="kel-list" style="padding:12px"><div class="empty"><div class="ei">📦</div><div class="et" data-l="yoq">Hali yozuv yo'q</div></div></div>
       </div>
     </div>
 

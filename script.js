@@ -424,8 +424,7 @@ function showPg(id){
   if(id==='his'){ renderHis(); renderRanking('all'); }
   if(id==='dar') renderDar();
   if(id==='ombor') renderOmbor();
-  if(id==='xar') renderXar();
-  if(id==='kel') renderKel();
+  if(id==='xar'){ renderXar(); renderKel(); }
   if(id==='sog'){ var sgt = document.getElementById('sgt'); if(sgt) sgt.disabled = false; renderSog(); }
   if(id==='mol') renderMolGrid();
   if(id==='sutolchov') renderSutOlchov();
@@ -1478,7 +1477,7 @@ function addKel(){
   ['kmiq','knarx','kkim'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('kel-summa').style.display='none';
   renderKel(); renderOmbor();
-  showTmpAlert('pg-kel');
+  showTmpAlert('pg-xar');
 }
 
 function delKel(id){
