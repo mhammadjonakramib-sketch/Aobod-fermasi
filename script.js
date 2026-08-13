@@ -982,6 +982,12 @@ function openMolDetail(id){
   if(m.ona) H+='<div class="mdrow"><span>'+tx('onasi')+'</span><strong><a href="#" class="mdlink" data-go-mol="'+esc(m.ona)+'">#'+esc(m.ona)+'</a></strong></div>';
   if(m.yosh) H+='<div class="mdrow"><span>'+tx('yoshi')+'</span><strong>'+esc(m.yosh)+'</strong></div>';
   if(m.vazn) H+='<div class="mdrow"><span>'+tx('ogirligi')+'</span><strong>'+esc(m.vazn)+' kg</strong></div>';
+  
+  var sysCalves = ld('FM').filter(function(x) { return x.ona === m.raqam; }).map(function(x) { return x.raqam; });
+  if(sysCalves.length > 0) {
+    H+='<div class="mdrow"><span>'+tx('bolalari')+'</span><strong>'+sysCalves.map(function(br){ return '<a href="#" class="mdlink" data-go-mol="'+esc(br)+'">#'+esc(br)+'</a>'; }).join(', ')+'</strong></div>';
+  }
+  
   H+='</div>';
 
   // ── Sotilgan ma'lumoti ──
