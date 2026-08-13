@@ -208,6 +208,15 @@
                 <option value="Xonajin" data-l="opt_xonajin_u">🐮 Xonajin (urg'ochi)</option>
               </select>
             </div>
+            <div class="fg" id="past-calves-row" style="display:none; grid-column:1/-1;">
+              <label data-l="past_calves">Oldingi bolalari (Tug'ish tarixi)</label>
+              <div id="past-calves-list" style="margin-bottom:8px"></div>
+              <div style="display:flex;gap:6px">
+                <input type="date" id="pc-date" style="flex:1">
+                <input type="text" id="pc-id" data-ph="pc_id_ph" placeholder="Bola ID (#101)" style="flex:1">
+                <button type="button" class="btn bs" id="add-pc-btn" data-l="qoshish" style="padding:6px 12px;font-size:12px">Qo'shish</button>
+              </div>
+            </div>
           </div>
           <div class="fgap">
             <button class="btn bs" id="add-mol-btn" data-l="saqlash">💾 Saqlash</button>

@@ -47,7 +47,7 @@ var L = {
     tashqariga_l:'Tashqariga', kompaniya_l:'Kompaniya',
     bildirishnomalar:'Bildirishnomalar', hammasi_oqildi:"Hammasini o'qildi", yangi_yoq:"Yangi bildirishnoma yo'q",
     hammasi_joyida:'Hammasi joyida', diqqat_yoq:"Diqqat talab qiladigan holat yo'q",
-    pdf_hisobot:'PDF hisobot', excel_jadval:'Excel (CSV)', sotilgan:'Sotilgan', sotilgan_sana:'Sotilgan sana', sotildi_belgilash:'Sotildi', sotildi_tugma:'Sotildi', molni_sotish:'Molni sotish', sotish_tavsif:"Tavsif (kimga, narx, sabab)", sut_olchash:"Sut o'lchash", sut_olchov:"Sut o'lchovi", olchov_sana:"O'lchov sanasi", ertalab:"Ertalab", obed:"Obed", kechqurun:"Kechqurun", so_hint:"Har sigir uchun ertalab / obed / kechqurun sutini kiriting — raqamiga avtomatik saqlanadi", so_empty:"Sigir yo'q. Avval Mollar bo'limiga qo'shing.", so_done:"Bu sanada barcha sigirlar o'lchandi", so_saqlandi:"✅ Sut o'lchovlari saqlandi", sigirni_tanlang:"Sigirni tanlang", sigir_tanla:"Avval sigirni tanlang", sut_kiriting:"Kamida bitta vaqt sutini kiriting", opt_urugqoyish:"💉 Urug' qo'yish", urug_info:"Urug' qo'yish ma'lumotlari", urug_hint:"💡 45 kundan keyin \"tekshirilsinmi\" bildirishnomasi keladi. Doktor tasdiqlasa, bo'g'ozlik hisobi shu sanadan boshlanadi.", bogoz_ha:"Ha, bo'g'oz", bogoz_yoq:"Yo'q, qochdi", bogoz_tasdiqlandi:"✅ Bo'g'ozlik tasdiqlandi", bogoz_bekor:"Mol qaytadan urug' qo'yish uchun tayyor", sutdan_chiqarildi:"Sutdan chiqarildi", sutdan_chiqarildi_msg:"✅ Sog'ish to'xtatildi", kolostrum_ogoh:"Bu sigir yaqinda tug'gan — sut hali toza emas (og'iz suti)", sigir_reyting:"Sigirlar reytingi", sana_tanla:"Sana tanlang", rk_empty:"Bu sanada sut o'lchovi yo'q", rk_filter_empty:"Bu diapazonda mol yo'q", emlash_guruh_h:"Kimlarga emlanadi?", eg_hammasi:"Hammasi", eg_sigirlar:"Sigirlar", eg_novvoslar:"Novvoslar", eg_bezovlar:"Bezovlar", eg_xonajinlar:"Xonajinlar", eg_bogozlar:"Bo'g'ozlar", eg_bosh:"Bu guruhda mol yo'q", emlandi_msg:"emlandi", yopish:"Yopish", asosiy_malumot:"Asosiy ma'lumot", tur_q:"Turi", tugilgan_sana:"Tug'ilgan sana", onasi:"Onasi", yoshi:"Yoshi", ogirligi:"Og'irligi", homiladorlik:"Homiladorlik", boshlangan_sana:"Boshlangan sana", joriy_oy:"Joriy oy", kutilgan_tugish:"Kutilgan tug'ish", songgi_tugish:"So'nggi tug'ish", songgi_3_olchov:"So'nggi 3 marta sut o'lchovi", olchov_yoq:"Hali o'lchov yo'q", soglik_tarixi:"Sog'liq tarixi", tarix_yoq:"Tarix yo'q", yana:"yana", sotilgan_malumoti:"Sotilgan ma'lumoti", tavsif:"Tavsif", mol_topilmadi:"Mol topilmadi", faqat_sigir_bogoz:"Faqat Sigir yoki Xonajin bo'g'oz bo'lishi mumkin", tugish_tarixi:"Tug'ish tarixi", bolalari:"Bolalari", tahrirlash:"Tahrirlash", raqam_band:"Bu raqam boshqa molda band", saqlandi:"Saqlandi", taxminiy:"taxminiy", poda_tarkibi:'Poda tarkibi', sut_dinamikasi:'Sut dinamikasi', songgi_7_kun:'7 kun', kechaga_nisbatan:'kecha', kecha_bilan_bir_xil:'kecha bilan bir xil', yangi:'yangi'
+    pdf_hisobot:'PDF hisobot', excel_jadval:'Excel (CSV)', sotilgan:'Sotilgan', sotilgan_sana:'Sotilgan sana', sotildi_belgilash:'Sotildi', sotildi_tugma:'Sotildi', molni_sotish:'Molni sotish', sotish_tavsif:"Tavsif (kimga, narx, sabab)", sut_olchash:"Sut o'lchash", sut_olchov:"Sut o'lchovi", olchov_sana:"O'lchov sanasi", ertalab:"Ertalab", obed:"Obed", kechqurun:"Kechqurun", so_hint:"Har sigir uchun ertalab / obed / kechqurun sutini kiriting — raqamiga avtomatik saqlanadi", so_empty:"Sigir yo'q. Avval Mollar bo'limiga qo'shing.", so_done:"Bu sanada barcha sigirlar o'lchandi", so_saqlandi:"✅ Sut o'lchovlari saqlandi", sigirni_tanlang:"Sigirni tanlang", sigir_tanla:"Avval sigirni tanlang", sut_kiriting:"Kamida bitta vaqt sutini kiriting", opt_urugqoyish:"💉 Urug' qo'yish", urug_info:"Urug' qo'yish ma'lumotlari", urug_hint:"💡 45 kundan keyin \"tekshirilsinmi\" bildirishnomasi keladi. Doktor tasdiqlasa, bo'g'ozlik hisobi shu sanadan boshlanadi.", bogoz_ha:"Ha, bo'g'oz", bogoz_yoq:"Yo'q, qochdi", bogoz_tasdiqlandi:"✅ Bo'g'ozlik tasdiqlandi", bogoz_bekor:"Mol qaytadan urug' qo'yish uchun tayyor", sutdan_chiqarildi:"Sutdan chiqarildi", sutdan_chiqarildi_msg:"✅ Sog'ish to'xtatildi", kolostrum_ogoh:"Bu sigir yaqinda tug'gan — sut hali toza emas (og'iz suti)", sigir_reyting:"Sigirlar reytingi", sana_tanla:"Sana tanlang", rk_empty:"Bu sanada sut o'lchovi yo'q", rk_filter_empty:"Bu diapazonda mol yo'q", emlash_guruh_h:"Kimlarga emlanadi?", eg_hammasi:"Hammasi", eg_sigirlar:"Sigirlar", eg_novvoslar:"Novvoslar", eg_bezovlar:"Bezovlar", eg_xonajinlar:"Xonajinlar", eg_bogozlar:"Bo'g'ozlar", eg_bosh:"Bu guruhda mol yo'q", emlandi_msg:"emlandi", yopish:"Yopish", asosiy_malumot:"Asosiy ma'lumot", tur_q:"Turi", tugilgan_sana:"Tug'ilgan sana", onasi:"Onasi", yoshi:"Yoshi", ogirligi:"Og'irligi", homiladorlik:"Homiladorlik", boshlangan_sana:"Boshlangan sana", joriy_oy:"Joriy oy", kutilgan_tugish:"Kutilgan tug'ish", songgi_tugish:"So'nggi tug'ish", songgi_3_olchov:"So'nggi 3 marta sut o'lchovi", olchov_yoq:"Hali o'lchov yo'q", soglik_tarixi:"Sog'liq tarixi", tarix_yoq:"Tarix yo'q", yana:"yana", sotilgan_malumoti:"Sotilgan ma'lumoti", tavsif:"Tavsif", mol_topilmadi:"Mol topilmadi", faqat_sigir_bogoz:"Faqat Sigir yoki Xonajin bo'g'oz bo'lishi mumkin", tugish_tarixi:"Tug'ish tarixi", bolalari:"Bolalari", tahrirlash:"Tahrirlash", raqam_band:"Bu raqam boshqa molda band", saqlandi:"Saqlandi", taxminiy:"taxminiy", poda_tarkibi:'Poda tarkibi', sut_dinamikasi:'Sut dinamikasi', songgi_7_kun:'7 kun', kechaga_nisbatan:'kecha', kecha_bilan_bir_xil:'kecha bilan bir xil', yangi:'yangi', past_calves:"Oldingi bolalari (Tug'ish tarixi)", pc_id_ph:"Bola ID (#101)", qoshish:"Qo'shish", err_pc_input:"Sana va bola ID kiriting!"
   },
   kir: {
     ferma_nomi:'Акрамжон Олимжон Обод Ф/Х', login_err:'Логин ёки парол нотўғри',
@@ -76,7 +76,7 @@ var L = {
     kel_sub:'Фермага келган емларни ёзиш', yangi_kel:'Янги ем келди',
     xar_sub:'Бошқа харажатларни ёзиб бориш', yangi_xar:'Янги харажат', xar_tarixi:'Харажатлар тарихи', ishchilar_xar:'Ишчилар (сўм)', elektr:'Электр энергия (сўм)', yoqilgi:'Ёқилғи (сўм)', dori_darmon_xar:'Дори-дармон (сўм)',
     yem_turi:'Ем тури', miqdori:'Миқдори', olchov:'Ўлчов', narxi:'Нархи (сўм)',
-    kim_keltirdi:'Ким келтирди', kel_tarixi:'Келган емлар',
+    kim_keltirdi:'Ким келтирди', kel_tarixi:'Келган емlar',
     ombor_sub:'Келди - Сарфланди = Қолди', ombor_holat:'Омбор ҳолати',
     keldi:'Келди', sarflandi:'Сарфланди', qoldi:'Қолди',
     sut_narxi:'Сут нархи', litr_narxi:'1 литр сут нархи (сўм)',
@@ -95,7 +95,7 @@ var L = {
     tashqariga_l:'Ташқарига', kompaniya_l:'Компания',
     bildirishnomalar:'Билдиришномалар', hammasi_oqildi:'Ҳаммасини ўқилди', yangi_yoq:'Янги билдиришнома йўқ',
     hammasi_joyida:'Ҳаммаси жойида', diqqat_yoq:'Диққат талаб қиладиган ҳолат йўқ',
-    pdf_hisobot:'PDF ҳисобот', excel_jadval:'Excel (CSV)', sotilgan:'Сотилган', sotilgan_sana:'Сотилган сана', sotildi_belgilash:'Сотилди', sotildi_tugma:'Сотилди', molni_sotish:'Молни сотиш', sotish_tavsif:"Тавсиф (кимга, нарх, сабаб)", sut_olchash:"Сут ўлчаш", sut_olchov:"Сут ўлчови", olchov_sana:"Ўлчов санаси", ertalab:"Эрталаб", obed:"Обед", kechqurun:"Кечқурун", so_hint:"Ҳар сигир учун эрталаб / обед / кечқурун сутини киритинг — рақамига автоматик сақланади", so_empty:"Сигир йўқ. Аввал Моллар бўлимига қўшинг.", so_done:"Бу санада барча сигирлар ўлчанди", so_saqlandi:"✅ Сут ўлчовлари сақланди", sigirni_tanlang:"Сигирни танланг", sigir_tanla:"Аввал сигирни танланг", sut_kiriting:"Камида битта вақт сутини киритинг", opt_urugqoyish:"💉 Уруғ қўйиш", urug_info:"Уруғ қўйиш маълумотлари", urug_hint:"💡 45 кундан кейин \"текширилсинми\" билдиришномаси келади. Доктор тасдиқласа, бўғозлик ҳисоби шу санадан бошланади.", bogoz_ha:"Ҳа, бўғоз", bogoz_yoq:"Йўқ, қочди", bogoz_tasdiqlandi:"✅ Бўғозлик тасдиқланди", bogoz_bekor:"Мол қайтадан уруғ қўйиш учун тайёр", sutdan_chiqarildi:"Сутдан чиқарилди", sutdan_chiqarildi_msg:"✅ Соғиш тўхтатилди", kolostrum_ogoh:"Бу сигир яқинда туғган — сут ҳали тоза эмас (оғиз сути)", sigir_reyting:"Сигирлар рейтинги", sana_tanla:"Сана танланг", rk_empty:"Бу санада сут ўлчови йўқ", rk_filter_empty:"Бу диапазонда мол йўқ", emlash_guruh_h:"Кимларга эмланади?", eg_hammasi:"Ҳаммаси", eg_sigirlar:"Сигирлар", eg_novvoslar:"Новвослар", eg_bezovlar:"Безовлар", eg_xonajinlar:"Хонажинлар", eg_bogozlar:"Бўғозлар", eg_bosh:"Бу гуруҳда мол йўқ", emlandi_msg:"эмланди", yopish:"Ёпиш", asosiy_malumot:"Асосий маълумот", tur_q:"Тури", tugilgan_sana:"Туғилган сана", onasi:"Онаси", yoshi:"Ёши", ogirligi:"Оғирлиги", homiladorlik:"Ҳомиладорлик", boshlangan_sana:"Бошланган сана", joriy_oy:"Жорий ой", kutilgan_tugish:"Кутилган туғиш", songgi_tugish:"Сўнгги туғиш", songgi_3_olchov:"Сўнгги 3 марта сут ўлчови", olchov_yoq:"Ҳали ўлчов йўқ", soglik_tarixi:"Соғлиқ тарихи", tarix_yoq:"Тарих йўқ", yana:"яна", sotilgan_malumoti:"Сотилган маълумоти", tavsif:"Тавсиф", mol_topilmadi:"Мол топилмади", faqat_sigir_bogoz:"Фақат Сигир ёки Хонажин бўғоз бўлиши мумкин", tugish_tarixi:"Туғиш тарихи", bolalari:"Болалари", tahrirlash:"Таҳрирлаш", raqam_band:"Бу рақам бошқа молда банд", saqlandi:"Сақланди", taxminiy:"тахминий", poda_tarkibi:'Пода таркиби', sut_dinamikasi:'Сут динамикаси', songgi_7_kun:'7 кун', kechaga_nisbatan:'кеча', kecha_bilan_bir_xil:'кеча билан бир хил', yangi:'янги'
+    pdf_hisobot:'PDF ҳисобот', excel_jadval:'Excel (CSV)', sotilgan:'Сотилган', sotilgan_sana:'Сотилган сана', sotildi_belgilash:'Сотилди', sotildi_tugma:'Сотилди', molni_sotish:'Молни сотиш', sotish_tavsif:"Тавсиф (кимга, нарх, сабаб)", sut_olchash:"Сут ўлчаш", sut_olchov:"Сут ўлчови", olchov_sana:"Ўлчов санаси", ertalab:"Эрталаб", obed:"Обед", kechqurun:"Кечқурун", so_hint:"Ҳар сигир учун эрталаб / обед / кечқурун сутини киритинг — рақамига автоматик сақланади", so_empty:"Сигир йўқ. Аввал Моллар бўлимига қўшинг.", so_done:"Бу санада барча сигирлар ўлчанди", so_saqlandi:"✅ Сут ўлчовлари сақланди", sigirni_tanlang:"Сигирни танланг", sigir_tanla:"Аввал сигирни танланг", sut_kiriting:"Камида битта вақт сутини киритинг", opt_urugqoyish:"💉 Уруғ қўйиш", urug_info:"Уруғ қўйиш маълумотлари", urug_hint:"💡 45 кундан кейин \"текширилсинми\" билдиришномаси келади. Доктор тасдиқласа, бўғозлик ҳисоби шу санадан бошланади.", bogoz_ha:"Ҳа, бўғоз", bogoz_yoq:"Йўқ, қочди", bogoz_tasdiqlandi:"✅ Бўғозлик тасдиқланди", bogoz_bekor:"Мол қайтадан уруғ қўйиш учун тайёр", sutdan_chiqarildi:"Сутдан чиқарилди", sutdan_chiqarildi_msg:"✅ Соғиш тўхтатилди", kolostrum_ogoh:"Бу сигир яқинда туғган — сут ҳали тоза эмас (оғиз сути)", sigir_reyting:"Сигирлар рейтинги", sana_tanla:"Сана танланг", rk_empty:"Бу санада сут ўлчови йўқ", rk_filter_empty:"Бу диапазонда мол йўқ", emlash_guruh_h:"Кимларга эмланади?", eg_hammasi:"Ҳаммаси", eg_sigirlar:"Сигирлар", eg_novvoslar:"Новвослар", eg_bezovlar:"Безовлар", eg_xonajinlar:"Хонажинлар", eg_bogozlar:"Бўғозлар", eg_bosh:"Бу гуруҳда мол йўқ", emlandi_msg:"эмланди", yopish:"Ёпиш", asosiy_malumot:"Асосий маълумот", tur_q:"Тури", tugilgan_sana:"Туғилган сана", onasi:"Онаси", yoshi:"Ёши", ogirligi:"Оғирлиги", homiladorlik:"Ҳомиладорлик", boshlangan_sana:"Бошланган сана", joriy_oy:"Жорий ой", kutilgan_tugish:"Кутилган туғиш", songgi_tugish:"Сўнгги туғиш", songgi_3_olchov:"Сўнгги 3 марта сут ўлчови", olchov_yoq:"Ҳали ўлчов йўқ", soglik_tarixi:"Соғлиқ тарихи", tarix_yoq:"Тарих йўқ", yana:"яна", sotilgan_malumoti:"Сотилган маълумоти", tavsif:"Тавсиф", mol_topilmadi:"Мол топилмади", faqat_sigir_bogoz:"Фақат Сигир ёки Хонажин бўғоз бўлиши мумкин", tugish_tarixi:"Туғиш тарихи", bolalari:"Болалари", tahrirlash:"Таҳрирлаш", raqam_band:"Бу рақам бошқа молда банд", saqlandi:"Сақланди", taxminiy:"тахминий", poda_tarkibi:'Пода таркиби', sut_dinamikasi:'Сут динамикаси', songgi_7_kun:'7 кун', kechaga_nisbatan:'кеча', kecha_bilan_bir_xil:'кеча билан бир хил', yangi:'янги', past_calves:"Олдинги болалари (Туғиш тарихи)", pc_id_ph:"Бола ID (#101)", qoshish:"Қўшиш", err_pc_input:"Сана ва бола ID киритинг!"
   }
 };
 
@@ -731,6 +731,8 @@ document.getElementById('yem-days').addEventListener('click', function(e){
 document.getElementById('mol-form-btn').addEventListener('click', function(){
   var f=document.getElementById('mol-form');
   f.style.display=f.style.display==='none'?'':'none';
+  _tempPastCalves = [];
+  renderPastCalves();
 });
 document.getElementById('mol-cancel-btn').addEventListener('click', function(){
   document.getElementById('mol-form').style.display='none';
@@ -740,6 +742,7 @@ document.getElementById('add-mol-btn').addEventListener('click', addMol);
 // Bezov tanlanса jins qatori ko'rinadi, Bezov/Xonajin uchun ona raqami tavsiya etiladi
 document.getElementById('mt').addEventListener('change', function(){
   document.getElementById('bezov-jins-row').style.display = this.value==='Bezov' ? '' : 'none';
+  document.getElementById('past-calves-row').style.display = this.value==='Sigir' ? '' : 'none';
   var isBezov = this.value==='Bezov';
   document.getElementById('yosh-row').style.display = isBezov ? 'none' : '';
   document.getElementById('tugilgan-row').style.display = isBezov ? '' : 'none';
@@ -765,6 +768,23 @@ document.getElementById('mol-sg').addEventListener('click', function(e){
 });
 (function(){ var ms=document.getElementById('mol-search'); if(ms) ms.addEventListener('input', function(){ molSearch=this.value; renderMolGrid(); }); })();
 
+var _tempPastCalves = [];
+function renderPastCalves() {
+  var html = _tempPastCalves.map(function(c, i){
+    return '<div style="display:flex;justify-content:space-between;background:var(--gp);padding:4px 8px;border-radius:4px;margin-bottom:4px;font-size:13px"><span>'+c.date+'</span><span>#'+c.id+'</span><span style="color:var(--rd);cursor:pointer" onclick="_tempPastCalves.splice('+i+',1);renderPastCalves()">❌</span></div>';
+  }).join('');
+  document.getElementById('past-calves-list').innerHTML = html;
+}
+document.getElementById('add-pc-btn').addEventListener('click', function(){
+  var d = document.getElementById('pc-date').value;
+  var id = document.getElementById('pc-id').value.trim();
+  if(!d || !id){ alert(tx('err_pc_input')); return; }
+  _tempPastCalves.push({date: d, id: id});
+  renderPastCalves();
+  document.getElementById('pc-date').value = '';
+  document.getElementById('pc-id').value = '';
+});
+
 function addMol(){
   var raqam=document.getElementById('mr').value.trim().slice(0,20);
   if(!raqam){ alert(tx('mol_raqami')+' kiriting!'); return; }
@@ -788,12 +808,22 @@ function addMol(){
     mol.bogozBosh = bogozSana;
     mol.kutilgan = addMonths(bogozSana, 9);
   }
+  
+  if (tur==='Sigir' && _tempPastCalves.length > 0) {
+    mol.tugList = _tempPastCalves.map(function(c) {
+      return {sana: c.date, bolalar: [c.id], soni: 1};
+    });
+  }
+
   var mols=ld('FM'); mols.push(mol);
   sv('FM', mols);
   ['mr','my','mbo','m-ona','m-tug'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('bezov-jins-row').style.display='none';
+  document.getElementById('past-calves-row').style.display='none';
   document.getElementById('yosh-row').style.display='';
   document.getElementById('tugilgan-row').style.display='none';
+  _tempPastCalves = [];
+  renderPastCalves();
   document.getElementById('mol-form').style.display='none';
   renderMolGrid(); updateDash();
   showTmpAlert('pg-mol');
