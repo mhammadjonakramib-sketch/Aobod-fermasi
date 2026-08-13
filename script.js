@@ -19,7 +19,7 @@ var L = {
     ertalab:'Ertalab', kechqurun:'Kechqurun', yem_tarixi:'Yem tarixi',
     mol_qosh:"Mol qo'shish", yangi_mol:'Yangi mol', mol_raqami:'Mol raqami', kelgan_sana:'Kelgan sana',
     mol_turi:'Mol turi', yoshi:'Yoshi', ogirligi:"Og'irligi (kg)",
-    holati:'Holati', bogozlik_oyi:"Bo'g'ozlik oyi", hammasi:'Hammasi',
+    holati:'Holati', bogozlik_oyi:"Bo'g'ozlik sanasi", hammasi:'Hammasi',
     soglom:"Sog'lom", bogoz:"Bo'g'oz", kasal:'Kasal', davolashda:'Davolashda',
     yangi_yozuv:'Yangi yozuv', voqea:'Voqea', dori_v:'Dori / Vaksina',
     tug_info:"Tug'ish ma'lumotlari", tug_tur:"Tug'ilgan tur", tug_jinsi:'Jinsi (1-bola)', tug_jinsi2:'Jinsi (2-bola)', bezov_jinsi:'Bezovlar jinsi', tug_soni:'Soni',
@@ -66,7 +66,7 @@ var L = {
     ertalab:'Эрталаб', kechqurun:'Кечқурун', yem_tarixi:'Ем тарихи',
     mol_qosh:'Мол қўшиш', yangi_mol:'Янги мол', mol_raqami:'Мол рақами', kelgan_sana:'Келган сана',
     mol_turi:'Мол тури', yoshi:'Ёши', ogirligi:'Оғирлиги (кг)',
-    holati:'Ҳолати', bogozlik_oyi:'Бўғозлик ойи', hammasi:'Ҳаммаси',
+    holati:'Ҳолати', bogozlik_oyi:'Бўғозлик санаси', hammasi:'Ҳаммаси',
     soglom:'Соғлом', bogoz:'Бўғоз', kasal:'Касал', davolashda:'Даволашда',
     yangi_yozuv:'Янги ёзув', voqea:'Воқеа', dori_v:'Дори / Вакцина',
     tug_info:'Туғиш маълумотлари', tug_tur:'Туғилган тур', tug_jinsi:'Жинси (1-бола)', tug_jinsi2:'Жинси (2-бола)', bezov_jinsi:'Безовлар жинси', tug_soni:'Сони',
@@ -434,7 +434,7 @@ function setDefs(){
   var now = new Date();
   var td = now.toISOString().slice(0,10);
   var mo = td.slice(0,7);
-  ['s1d','yd','sgd','kd','m-kelgan'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=td; });
+  ['s1d','yd','sgd','kd'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=td; });
   ['sut-fm','yem-fm','his-m','dar-m','kel-fm','ombor-m'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=mo; });
   document.getElementById('today-d').textContent = now.toLocaleDateString('uz-UZ',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('sut-fm').addEventListener('change', renderSut);
@@ -766,30 +766,28 @@ function addMol(){
   var raqam=document.getElementById('mr').value.trim().slice(0,20);
   if(!raqam){ alert(tx('mol_raqami')+' kiriting!'); return; }
   var tur = document.getElementById('mt').value;
-  var bogozOy = parseInt(document.getElementById('mbo').value)||0;
+  var bogozSana = document.getElementById('mbo').value;
   var holat = document.getElementById('mh').value;
-  if(bogozOy>=1 && (tur==='Sigir'||tur==='Xonajin')) holat='Bogoz';
+  if(bogozSana && (tur==='Sigir'||tur==='Xonajin')) holat='Bogoz';
   var bugun = new Date().toISOString().slice(0,10);
-  var kelganVal = document.getElementById('m-kelgan').value || bugun;
   var tugSanaVal = document.getElementById('m-tug').value;
   var mol = {
     id:Date.now(), raqam:raqam, tur:tur,
     yosh:document.getElementById('my').value.slice(0,30), vazn:'',
-    holat:holat, bogoz:document.getElementById('mbo').value,
-    ona:document.getElementById('m-ona').value.trim().slice(0,20), q:kelganVal
+    holat:holat, bogoz:'',
+    ona:document.getElementById('m-ona').value.trim().slice(0,20), q:bugun
   };
   if(tur==='Bezov'){
     mol.bezovJins = document.getElementById('bezov-jins').value;
     if(tugSanaVal){ mol.q = tugSanaVal; mol.tugganMi = true; mol.yosh=''; }
   }
-  if(holat==='Bogoz' && bogozOy>=1){
-    mol.bogozBosh = addMonths(bugun, -bogozOy);
-    mol.kutilgan = addMonths(mol.bogozBosh, 9);
+  if(holat==='Bogoz' && bogozSana){
+    mol.bogozBosh = bogozSana;
+    mol.kutilgan = addMonths(bogozSana, 9);
   }
   var mols=ld('FM'); mols.push(mol);
   sv('FM', mols);
   ['mr','my','mbo','m-ona','m-tug'].forEach(function(id){ document.getElementById(id).value=''; });
-  document.getElementById('m-kelgan').value = bugun;
   document.getElementById('bezov-jins-row').style.display='none';
   document.getElementById('yosh-row').style.display='';
   document.getElementById('tugilgan-row').style.display='none';
